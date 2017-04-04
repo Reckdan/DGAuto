@@ -1,0 +1,9 @@
+﻿Group: Extension
+FriendlyName: Setup Vehicle Information
+SystemName: Extension.Vehicle
+Version: 1.00
+SupportedVersions: 3.90
+Author: Daniel Antwi
+DisplayOrder: 1
+FileName: Nop.Plugin.Extension.Vehicle.dll
+Description: This plugin extension nop commerce for handling vehicle parts

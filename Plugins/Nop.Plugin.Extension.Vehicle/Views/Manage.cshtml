@@ -1,0 +1,79 @@
+﻿@{ 
+    Layout = "_AdminLayout.cshtml";
+}
+@*@{ 
+    Html.AddScriptParts(Url.Content("~/Plugins/Extensions.Vehicle/Scripts/bootstrap.js"));
+    Html.AppendCssFileParts(Url.Content("~/Plugins/Extensions.Vehicle/Styles/boots.css"));
+}*@
+<div class="content-header clearfix">
+    <h1 class="pull-left">
+        Vehicle Fitment Management
+    </h1>
+    <div class="pull-right">
+        <button type="button" class="btn btn-block btn-primary">Vehicle Fitment</button>
+
+    </div>
+
+</div>
+<div class="page-content container-fluid">
+    <!-- Panel Tabs -->
+    <div class="panel">
+        <div class="panel-heading">
+            <h3 class="panel-title">Product Fitment</h3>
+        </div>
+        <div class="panel-body container-fluid">
+            <div class="row row-lg">
+                <div class="col-lg-12">
+                    <!-- Example Tabs -->
+                    <h4>Products</h4>
+                    <div class="input-group">
+                       
+                        <input id="product" type="text" class="form-control" placeholder="Enter Sku" />
+                        <span class="input-group-btn">
+                            <button id="fsearch" class="btn btn-default" type="button">Load</button>
+                        </span>
+                    </div>
+                    <div id="Fitments"></div>
+                    <!--End Tabs-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+
+
+                    // create ComboBox from input HTML element
+                    @*$("#fabric").kendoComboBox({
+                        placeholder: "Select Product....",
+                        dataTextField: "Name",
+                        dataValueField: "Id",
+                        filter: "contains",
+                        autoBind: false,
+                        minLength: 3,
+                        dataSource: {
+                            type: "odata",
+                            serverFiltering: true,
+                            transport: {
+                                read: {
+                                    url: "@Html.Raw(Url.Action("ListProducts", "Vehicle"))",
+                                data: "1"
+                            }
+                        }
+                    }
+
+                    });*@
+
+                    // create ComboBox from select HTML element
+                    //$("#size").kendoComboBox();
+
+                    //var fabric = $("#fabric").data("kendoComboBox");
+					//var select = $("#size").data("kendoComboBox");
+
+
+					//$("#get").click(function() {
+					//    alert('Thank you! Your Choice is:\n\nFabric ID: ' + fabric.value() + ' and Size: ' + select.value());
+                    //});
+                });
+</script>

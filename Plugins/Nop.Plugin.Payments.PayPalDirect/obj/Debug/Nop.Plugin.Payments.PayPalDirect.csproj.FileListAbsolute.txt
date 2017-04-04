@@ -1,0 +1,11 @@
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\AutoPartsNew\Presentation\Nop.Web\Plugins\Payments.PayPalDirect\Views\Configure.cshtml
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\AutoPartsNew\Presentation\Nop.Web\Plugins\Payments.PayPalDirect\Views\PaymentInfo.cshtml
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\AutoPartsNew\Presentation\Nop.Web\Plugins\Payments.PayPalDirect\web.config
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\AutoPartsNew\Presentation\Nop.Web\Plugins\Payments.PayPalDirect\Description.txt
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\AutoPartsNew\Presentation\Nop.Web\Plugins\Payments.PayPalDirect\logo.jpg
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\AutoPartsNew\Presentation\Nop.Web\Plugins\Payments.PayPalDirect\Nop.Plugin.Payments.PayPalDirect.dll.config
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\AutoPartsNew\Presentation\Nop.Web\Plugins\Payments.PayPalDirect\Nop.Plugin.Payments.PayPalDirect.dll
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\AutoPartsNew\Presentation\Nop.Web\Plugins\Payments.PayPalDirect\Nop.Plugin.Payments.PayPalDirect.pdb
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\AutoPartsNew\Plugins\Nop.Plugin.Payments.PayPalDirect\obj\Debug\Nop.Plugin.Payments.PayPalDirect.csprojResolveAssemblyReference.cache
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\AutoPartsNew\Plugins\Nop.Plugin.Payments.PayPalDirect\obj\Debug\Nop.Plugin.Payments.PayPalDirect.dll
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\AutoPartsNew\Plugins\Nop.Plugin.Payments.PayPalDirect\obj\Debug\Nop.Plugin.Payments.PayPalDirect.pdb

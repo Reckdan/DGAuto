@@ -1,0 +1,12 @@
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\AutoPartsNew\Presentation\Nop.Web\Plugins\Payments.PayPalStandard\Views\Configure.cshtml
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\AutoPartsNew\Presentation\Nop.Web\Plugins\Payments.PayPalStandard\Views\PaymentInfo.cshtml
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\AutoPartsNew\Presentation\Nop.Web\Plugins\Payments.PayPalStandard\web.config
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\AutoPartsNew\Presentation\Nop.Web\Plugins\Payments.PayPalStandard\Description.txt
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\AutoPartsNew\Presentation\Nop.Web\Plugins\Payments.PayPalStandard\logo.jpg
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\AutoPartsNew\Presentation\Nop.Web\Plugins\Payments.PayPalStandard\Nop.Plugin.Payments.PayPalStandard.dll.config
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\AutoPartsNew\Presentation\Nop.Web\Plugins\Payments.PayPalStandard\Nop.Plugin.Payments.PayPalStandard.dll
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\AutoPartsNew\Presentation\Nop.Web\Plugins\Payments.PayPalStandard\Nop.Plugin.Payments.PayPalStandard.pdb
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\AutoPartsNew\Plugins\Nop.Plugin.Payments.PayPalStandard\obj\Debug\Nop.Plugin.Payments.PayPalStandard.csproj.App.config
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\AutoPartsNew\Plugins\Nop.Plugin.Payments.PayPalStandard\obj\Debug\Nop.Plugin.Payments.PayPalStandard.csprojResolveAssemblyReference.cache
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\AutoPartsNew\Plugins\Nop.Plugin.Payments.PayPalStandard\obj\Debug\Nop.Plugin.Payments.PayPalStandard.dll
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\AutoPartsNew\Plugins\Nop.Plugin.Payments.PayPalStandard\obj\Debug\Nop.Plugin.Payments.PayPalStandard.pdb

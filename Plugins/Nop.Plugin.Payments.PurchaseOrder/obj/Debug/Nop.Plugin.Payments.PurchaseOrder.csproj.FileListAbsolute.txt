@@ -1,0 +1,12 @@
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\AutoPartsNew\Presentation\Nop.Web\Plugins\Payments.PurchaseOrder\Views\Configure.cshtml
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\AutoPartsNew\Presentation\Nop.Web\Plugins\Payments.PurchaseOrder\Views\PaymentInfo.cshtml
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\AutoPartsNew\Presentation\Nop.Web\Plugins\Payments.PurchaseOrder\web.config
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\AutoPartsNew\Presentation\Nop.Web\Plugins\Payments.PurchaseOrder\Description.txt
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\AutoPartsNew\Presentation\Nop.Web\Plugins\Payments.PurchaseOrder\logo.jpg
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\AutoPartsNew\Presentation\Nop.Web\Plugins\Payments.PurchaseOrder\Nop.Plugin.Payments.PurchaseOrder.dll.config
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\AutoPartsNew\Presentation\Nop.Web\Plugins\Payments.PurchaseOrder\Nop.Plugin.Payments.PurchaseOrder.dll
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\AutoPartsNew\Presentation\Nop.Web\Plugins\Payments.PurchaseOrder\Nop.Plugin.Payments.PurchaseOrder.pdb
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\AutoPartsNew\Plugins\Nop.Plugin.Payments.PurchaseOrder\obj\Debug\Nop.Plugin.Payments.PurchaseOrder.csproj.App.config
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\AutoPartsNew\Plugins\Nop.Plugin.Payments.PurchaseOrder\obj\Debug\Nop.Plugin.Payments.PurchaseOrder.csprojResolveAssemblyReference.cache
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\AutoPartsNew\Plugins\Nop.Plugin.Payments.PurchaseOrder\obj\Debug\Nop.Plugin.Payments.PurchaseOrder.dll
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\AutoPartsNew\Plugins\Nop.Plugin.Payments.PurchaseOrder\obj\Debug\Nop.Plugin.Payments.PurchaseOrder.pdb
