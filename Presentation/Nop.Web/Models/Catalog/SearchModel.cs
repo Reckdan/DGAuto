@@ -11,7 +11,7 @@ namespace Nop.Web.Models.Catalog
         {
             this.PagingFilteringContext = new CatalogPagingFilteringModel();
             this.Products = new List<ProductOverviewModel>();
-
+            Conditions = new List<SelectListItem>();
             this.AvailableCategories = new List<SelectListItem>();
             this.AvailableManufacturers = new List<SelectListItem>();
             this.AvailableVendors = new List<SelectListItem>();
@@ -39,6 +39,15 @@ namespace Nop.Web.Models.Catalog
         /// </summary>
         [NopResourceDisplayName("Search.Manufacturer")]
         public int mid { get; set; }
+        //Product condition
+        [NopResourceDisplayName("Admin.Catalog.Products.Fields.Condition")]
+        public int ConditionId { get; set; }
+
+        [NopResourceDisplayName("Admin.Catalog.Products.Fields.Condition")]
+        public string Condition { get; set; }
+
+
+        public IList<SelectListItem> Conditions { get; set; }
         /// <summary>
         /// Vendor ID
         /// </summary>

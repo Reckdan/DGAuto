@@ -1187,6 +1187,7 @@ namespace Nop.Web.Factories
                 ProductType = product.ProductType,
                 ShowSku = _catalogSettings.ShowSkuOnProductDetailsPage,
                 Sku = product.Sku,
+                Condition = product.ConditionId == 1 ? "New" : "Used",
                 ShowManufacturerPartNumber = _catalogSettings.ShowManufacturerPartNumber,
                 FreeShippingNotificationEnabled = _catalogSettings.ShowFreeShippingNotification,
                 ManufacturerPartNumber = product.ManufacturerPartNumber,

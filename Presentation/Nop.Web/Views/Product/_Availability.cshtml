@@ -6,7 +6,7 @@
         @if (!String.IsNullOrWhiteSpace(Model.StockAvailability))
         {
             <div class="stock">
-                <span class="label">@T("Products.Availability"):</span>
+                <span>@T("Products.Availability"):</span>
                 <span class="value" id="stock-availability-value-@Model.Id">@Model.StockAvailability</span>
             </div>
         }

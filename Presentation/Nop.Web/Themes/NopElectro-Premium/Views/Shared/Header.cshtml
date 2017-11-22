@@ -1,0 +1,42 @@
+﻿<div class="responsive-header hidden-md hidden-lg">
+    <a class="responsive-header-trigger" id="links">@T("NopElectro.Links")</a>
+</div>
+<div class="header-upper inactive">
+    <div class="container">
+        <div class="header-selectors-wrapper">
+            @Html.Action("TaxTypeSelector", "Common")
+            @Html.Action("CurrencySelector", "Common")
+            @Html.Action("LanguageSelector", "Common")
+            @Html.Widget("header_selectors")
+        </div>
+        <div class="header-links-wrapper">
+            @Html.Action("HeaderLinks", "Common")
+            @Html.Action("FlyoutShoppingCart", "ShoppingCart")
+        </div>
+    </div>
+</div>
+<div class="header">
+    @Html.Widget("header")
+    <div class="header-lower">
+        <div class="header-logo">
+            @Html.Action("Logo", "Common")
+        </div>
+        <div class="search-box store-search-box">
+            @Html.Action("SearchBox", "Catalog")
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#links").click(function () {
+            if ($('.header-upper').hasClass('inactive')) {
+                $('.header-upper').removeClass('inactive').addClass('active');
+            }
+            else {
+                $('.header-upper').removeClass('active').addClass('inactive');
+            }
+        });
+    });
+</script>

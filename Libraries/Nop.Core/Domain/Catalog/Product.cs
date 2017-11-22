@@ -5,6 +5,7 @@ using Nop.Core.Domain.Localization;
 using Nop.Core.Domain.Security;
 using Nop.Core.Domain.Seo;
 using Nop.Core.Domain.Stores;
+using Nop.Core.Domain.Fitment;
 
 namespace Nop.Core.Domain.Catalog
 {
@@ -24,6 +25,7 @@ namespace Nop.Core.Domain.Catalog
         private ICollection<TierPrice> _tierPrices;
         private ICollection<Discount> _appliedDiscounts;
         private ICollection<ProductWarehouseInventory> _productWarehouseInventory;
+        private ICollection<VFitment> _fitments;
 
 
         /// <summary>
@@ -512,6 +514,18 @@ namespace Nop.Core.Domain.Catalog
                 this.BackorderModeId = (int)value;
             }
         }
+        public int ConditionId { get; set; }
+        //public ProductCondition Condition
+        //{
+        //    get
+        //    {
+        //        return (ProductCondition)this.ConditionId;
+        //    }
+        //    set
+        //    {
+        //        this.ConditionId = (int)value;
+        //    }
+        //}
 
         /// <summary>
         /// Gets or sets the download activation type
@@ -705,6 +719,19 @@ namespace Nop.Core.Domain.Catalog
         {
             get { return _productWarehouseInventory ?? (_productWarehouseInventory = new List<ProductWarehouseInventory>()); }
             protected set { _productWarehouseInventory = value; }
+        }
+
+
+        public virtual ICollection<VFitment> VFitments
+        {
+            get
+            {
+                return this._fitments ?? (_fitments = new List<VFitment>());
+            }
+            protected set
+            {
+                this._fitments = value;
+            }
         }
     }
 }

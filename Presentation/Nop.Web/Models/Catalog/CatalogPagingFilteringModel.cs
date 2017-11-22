@@ -82,6 +82,11 @@ namespace Nop.Web.Models.Catalog
         /// Product sorting
         /// </summary>
         public string ViewMode { get; set; }
+
+        public int BaseVehicleID { get; set; }
+
+        public int VehicleID { get; set; }
+        public int EngineID { get; set; }
         
         #endregion
 

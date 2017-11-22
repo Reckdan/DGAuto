@@ -2,7 +2,9 @@
 using Nop.Core.Plugins;
 using Nop.Plugin.Extension.Vehicle.Data;
 using Nop.Plugin.Extension.Vehicle.Domain;
+using Nop.Services.Cms;
 using Nop.Web.Framework;
+using Nop.Web.Framework.Controllers;
 using Nop.Web.Framework.Menu;
 using System;
 using System.Collections.Generic;
@@ -13,7 +15,8 @@ using System.Web.Routing;
 
 namespace Nop.Plugin.Extension.Vehicle
 {
-    public class VehiclePlugin : BasePlugin, IAdminMenuPlugin
+    [AdminAuthorize]
+    public class VehiclePlugin : BasePlugin, IWidgetPlugin
     {
         private readonly VehicelDBObjectContext _context;
         //private IRepository<Make> _makeRepo;
@@ -52,26 +55,78 @@ namespace Nop.Plugin.Extension.Vehicle
             base.Uninstall();
         }
 
-        void IAdminMenuPlugin.ManageSiteMap(SiteMapNode rootNode)
+        void IWidgetPlugin.GetConfigurationRoute(out string actionName, out string controllerName, out RouteValueDictionary routeValues)
         {
-            var menuItem = new SiteMapNode()
+            actionName = "Configure";
+            controllerName = "Fitment";
+            routeValues = new RouteValueDictionary()
             {
-                SystemName = "Vehicles",
-                Title = "Vehicles Setup",
-                ControllerName = "Vehicle",
-                ActionName = "Manage",
-                Visible = true,
-                RouteValues = new RouteValueDictionary() { { "area", null } },
-
-
+                { "Namespaces", "Nop.Plugin.Extension.Vehicle.Controllers" },
+                { "area", null }
             };
-            var pluginNode = rootNode.ChildNodes.FirstOrDefault(x => x.SystemName == "Third party plugins");
-            if (pluginNode != null)
+        }
+
+        void IWidgetPlugin.GetDisplayWidgetRoute(string widgetZone, out string actionName, out string controllerName, out RouteValueDictionary routeValues)
+        {
+            if (widgetZone == "left_side_of_page")
             {
-                pluginNode.ChildNodes.Add(menuItem);
+                actionName = "SearchFitment";
+                controllerName = "Fitment";
+                routeValues = new RouteValueDictionary
+            {
+                {"Namespaces", "Nop.Plugin.Extension.Vehicle.Controllers"},
+                {"area", null},
+                {"widgetZone", widgetZone}
+            };
+            }else if(widgetZone== "top_of_page")
+            {
+                actionName = "CheckFit";
+                controllerName = "Fitment";
+                routeValues = new RouteValueDictionary
+            {
+                {"Namespaces", "Nop.Plugin.Extension.Vehicle.Controllers"},
+                {"area", null},
+                {"widgetZone", widgetZone}
+            };
             }
             else
-                rootNode.ChildNodes.Add(menuItem);
+            {
+                actionName = "SearchFitment";
+                controllerName = "Fitment";
+                routeValues = new RouteValueDictionary
+            {
+                {"Namespaces", "Nop.Plugin.Extension.Vehicle.Controllers"},
+                {"area", null},
+                {"widgetZone", widgetZone}
+            };
+            }
         }
+
+        IList<string> IWidgetPlugin.GetWidgetZones()
+        {
+            return new List<string>() { "left_side_of_page","top_of_page" };
+        }
+
+        //void IAdminMenuPlugin.ManageSiteMap(SiteMapNode rootNode)
+        //{
+        //    var menuItem = new SiteMapNode()
+        //    {
+        //        SystemName = "Vehicles",
+        //        Title = "Vehicles Setup",
+        //        ControllerName = "Vehicle",
+        //        ActionName = "Manage",
+        //        Visible = true,
+        //        RouteValues = new RouteValueDictionary() { { "area", null } },
+
+
+        //    };
+        //    var pluginNode = rootNode.ChildNodes.FirstOrDefault(x => x.SystemName == "Third party plugins");
+        //    if (pluginNode != null)
+        //    {
+        //        pluginNode.ChildNodes.Add(menuItem);
+        //    }
+        //    else
+        //        rootNode.ChildNodes.Add(menuItem);
+        //}
     }
 }

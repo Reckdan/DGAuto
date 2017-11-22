@@ -10,3 +10,15 @@ C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\AutoPartsNew\Plugi
 C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\AutoPartsNew\Plugins\Nop.Plugin.Feed.GoogleShopping\obj\Debug\Nop.Plugin.Feed.GoogleShopping.csprojResolveAssemblyReference.cache
 C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\AutoPartsNew\Plugins\Nop.Plugin.Feed.GoogleShopping\obj\Debug\Nop.Plugin.Feed.GoogleShopping.dll
 C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\AutoPartsNew\Plugins\Nop.Plugin.Feed.GoogleShopping\obj\Debug\Nop.Plugin.Feed.GoogleShopping.pdb
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\DGAuto\Presentation\Nop.Web\Plugins\Feed.GoogleShopping\Content\styles.css
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\DGAuto\Presentation\Nop.Web\Plugins\Feed.GoogleShopping\Views\Configure.cshtml
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\DGAuto\Presentation\Nop.Web\Plugins\Feed.GoogleShopping\Description.txt
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\DGAuto\Presentation\Nop.Web\Plugins\Feed.GoogleShopping\web.config
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\DGAuto\Presentation\Nop.Web\Plugins\Feed.GoogleShopping\logo.jpg
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\DGAuto\Presentation\Nop.Web\Plugins\Feed.GoogleShopping\Nop.Plugin.Feed.GoogleShopping.dll.config
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\DGAuto\Presentation\Nop.Web\Plugins\Feed.GoogleShopping\Nop.Plugin.Feed.GoogleShopping.dll
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\DGAuto\Presentation\Nop.Web\Plugins\Feed.GoogleShopping\Nop.Plugin.Feed.GoogleShopping.pdb
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\DGAuto\Plugins\Nop.Plugin.Feed.GoogleShopping\obj\Debug\Nop.Plugin.Feed.GoogleShopping.csproj.App.config
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\DGAuto\Plugins\Nop.Plugin.Feed.GoogleShopping\obj\Debug\Nop.Plugin.Feed.GoogleShopping.dll
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\DGAuto\Plugins\Nop.Plugin.Feed.GoogleShopping\obj\Debug\Nop.Plugin.Feed.GoogleShopping.pdb
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\DGAuto\Plugins\Nop.Plugin.Feed.GoogleShopping\obj\Debug\Nop.Plugin.Feed.GoogleShopping.csprojResolveAssemblyReference.cache

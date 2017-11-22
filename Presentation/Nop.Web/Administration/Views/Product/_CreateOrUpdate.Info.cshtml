@@ -574,6 +574,17 @@
                                 @Html.ValidationMessageFor(model => model.FullDescription)
                             </div>
                         </div>
+
+                                  <div class="form-group">
+                                      <div class="col-md-3">
+                                          @Html.NopLabelFor(model => model.Condition)
+                                      </div>
+                                      <div class="col-md-9">
+                                          @Html.NopDropDownList("ConditionId", Model.Conditions)
+                                          @*@Html.EditorFor(x => x.FullDescription, "RichEditor")
+                                          @Html.ValidationMessageFor(model => model.FullDescription)*@
+                                      </div>
+                                  </div>
                     </div>
                             ))
                     <div class="form-group">

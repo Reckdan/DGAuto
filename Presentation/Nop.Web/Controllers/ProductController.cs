@@ -25,6 +25,9 @@ using Nop.Web.Framework.Security;
 using Nop.Web.Framework.Security.Captcha;
 using Nop.Web.Infrastructure.Cache;
 using Nop.Web.Models.Catalog;
+using Nop.Admin.Models.Fitment;
+using Nop.Services.Fitment;
+using Nop.Web.Models.Fitment;
 
 namespace Nop.Web.Controllers
 {
@@ -53,6 +56,7 @@ namespace Nop.Web.Controllers
         private readonly LocalizationSettings _localizationSettings;
         private readonly CaptchaSettings _captchaSettings;
         private readonly ICacheManager _cacheManager;
+        private readonly IFitmentService _fitmentService;
 
         #endregion
 
@@ -78,7 +82,8 @@ namespace Nop.Web.Controllers
             ShoppingCartSettings shoppingCartSettings,
             LocalizationSettings localizationSettings,
             CaptchaSettings captchaSettings,
-            ICacheManager cacheManager)
+            ICacheManager cacheManager,
+            IFitmentService fitmentService)
         {
             this._productModelFactory = productModelFactory;
             this._productService = productService;
@@ -101,6 +106,7 @@ namespace Nop.Web.Controllers
             this._localizationSettings = localizationSettings;
             this._captchaSettings = captchaSettings;
             this._cacheManager = cacheManager;
+            this._fitmentService = fitmentService;
         }
 
         #endregion
@@ -183,7 +189,72 @@ namespace Nop.Web.Controllers
 
             return View(productTemplateViewPath, model);
         }
+        [NopHttpsRequirement(SslRequirement.No)]
+        public ActionResult ClearCureentVehicle()
+        {
+            Session.Add("BaseVehicleID", "0");
+            Session.Add("VehicleID", "0");
+            Session.Add("EngineID", "0");
+            return Json("Success", JsonRequestBehavior.AllowGet);
+        }
+        public virtual ActionResult CheckFit(int id)
+        {
+            var model = new VFitmentModel();
+            model.ProductID = id;
+            var years = _fitmentService.GetYears();
+            model.YearList.Add(new SelectListItem { Text = "Select Year", Value = "0" });
+            foreach (var y in years)
+            {
+                model.YearList.Add(new SelectListItem { Text = y.Year.ToString(), Value = y.Year.ToString(), Selected = y.Year == 1998 ? true : false });
+            }
+            var vehicleName = "";
+            ViewBag.CurrentVehicle = "";
+            ViewBag.ProductFit = -1;
+            if (Session["BaseVehicleID"] != null && Session["VehicleID"] != null && Session["EngineID"]!=null)
+            {
 
+                int baseVehicleID = int.Parse(Session["BaseVehicleID"].ToString());
+                int VehicleID= int.Parse(Session["VehicleID"].ToString());
+                int EngineID= int.Parse(Session["EngineID"].ToString());
+                vehicleName = _fitmentService.GetBaseVehicleName(BaseVehicleID: baseVehicleID);
+                var fitment = _fitmentService.ListFitment(BaseVehicelID: baseVehicleID, VehicleID: VehicleID, EngineID: EngineID, ProductID: id);
+               
+                if (fitment.Count != 0)
+                {
+                    ViewBag.CurrentVehicle = vehicleName;
+                    ViewBag.ProductFit = 1;
+                }
+                else
+                {
+                    ViewBag.CurrentVehicle = vehicleName;
+                    ViewBag.ProductFit = 0;
+                }
+            }
+            return PartialView("_vehicleFit", model);
+        }
+        [HttpPost]
+        [NopHttpsRequirement(SslRequirement.No)]
+        public virtual ActionResult CheckProductFit(int Year = 0, int MakeID = 0, int ModelID = 0, int VehicleID = 0, int EngineID = 0, int ProductID=0)
+        {
+            var baseVehicle = _fitmentService.GetBaseVehicle(Year: Year, MakeID: MakeID, ModelID: ModelID);
+            Session.Add("BaseVehicleID", baseVehicle.Id);
+            Session.Add("VehicleID", VehicleID);
+            Session.Add("EngineID", EngineID);
+            int  result = 0;
+            var ProductFit = new FitmentSearchModel
+            {
+                ProductFit = result,
+                SelectVehicle= baseVehicle.Year.ToString() + " " + baseVehicle.Make.MakeName + " " + baseVehicle.VehicleModel.ModelName
+        };
+            var fitment = _fitmentService.ListFitment(Year: Year, MakeID: MakeID, ModelID: ModelID, VehicleID: VehicleID, EngineID: EngineID, ProductID: ProductID);
+            if(fitment !=null)
+            {
+                if (fitment.Count != 0)
+                    ProductFit.ProductFit = 1;
+                
+            }
+            return Json(ProductFit);
+        }
         [ChildActionOnly]
         public virtual ActionResult RelatedProducts(int productId, int? productThumbPictureSize)
         {

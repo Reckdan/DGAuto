@@ -27,6 +27,14 @@ namespace Nop.Plugin.Extension.Vehicle.Services
         void AddEngine(Engine record);
         void AddBaseVehicle(BaseVehicle record);
         List<Fitment> GetFitments(int? productID);
+        IPagedList<Fitment> SearchFitments(
+            int pageIndex = 0,
+            int pageSize = int.MaxValue,
+          
+            
+            int vendorId = 0,
+            string Sku = ""
+           );
         /// <summary>
         /// Logs the specified record.
         /// </summary>
@@ -42,6 +50,8 @@ namespace Nop.Plugin.Extension.Vehicle.Services
         private readonly IRepository<Make> _makeRepo;
         private readonly IRepository<Engine> _engineRepo;
         private readonly IRepository<BaseVehicle> _baseVehicleRepo;
+        private readonly IRepository<VehicleProduct> _vehicleProductRepo;
+        private readonly IRepository<Product> _product;
         private readonly IDataProvider _dataProvider;
         private VehicelDBObjectContext _vDBContext;
         private readonly IWorkContext _workContext;
@@ -55,7 +65,8 @@ namespace Nop.Plugin.Extension.Vehicle.Services
             IRepository<BaseVehicle> baseVehicle,VehicelDBObjectContext vDBcontext,IDataProvider dataProvider,IWorkContext workContext,
             IAclService aclService,
             CommonSettings commonSettings,
-            CatalogSettings catalogSettings)
+            CatalogSettings catalogSettings,
+            IRepository<VehicleProduct> vehicleproduct,IRepository<Product> product)
         {
             _vehicleRecordRepo = vehicleRecord;
             _vehicleTypeRepo = vehicleType;
@@ -67,10 +78,11 @@ namespace Nop.Plugin.Extension.Vehicle.Services
             _vDBContext = vDBcontext;
             _dataProvider = dataProvider;
             _workContext = workContext;
+            this._vehicleProductRepo = vehicleproduct;
             this._aclService = aclService;
             this._commonSettings = commonSettings;
             this._catalogSettings = catalogSettings;
-
+            this._product = product;
         }
 
         public void AddMake(Make record)
@@ -126,6 +138,74 @@ namespace Nop.Plugin.Extension.Vehicle.Services
             //return fitments.ToList<Fitment>();
             return mList;
             
+        }
+
+        public virtual IPagedList<Fitment> SearchFitments(int pageIndex = 0, int pageSize = int.MaxValue, int vendorId = 0, string Sku = "")
+        {
+            var fitments = new List<Fitment>();
+            var query = _vehicleProductRepo.Table;
+            //if (Sku != "")
+            //{
+            //    query=from q in query wher
+            //}
+
+            var vendorList= (from q in query 
+                       join p in _product.Table on q.ProductID equals p.Id //where p.VendorId==vendorId
+                       select new
+                       {
+                           q.ProductID,
+                           q.VehicleRecordID,
+                           p.Sku,
+                           p.VendorId
+                           
+                       });
+            if (vendorId != 0)
+            {
+                vendorList = vendorList.Where(v => v.VendorId == vendorId);
+            }
+            if (Sku != "")
+            {
+                vendorList = vendorList.Where(v => v.Sku == Sku);
+            }
+            var result = (from q in vendorList
+                     join v in _vehicleRecordRepo.Table on q.VehicleRecordID equals v.Id into prod_vehicle
+                     from pv in prod_vehicle.DefaultIfEmpty()
+                     join vb in _baseVehicleRepo.Table on pv.BaseVehicleID equals vb.Id into prod_baseVehicle
+                     from p_bv in prod_baseVehicle.DefaultIfEmpty()
+                     join m in _modelRepo.Table on p_bv.ModelID equals m.Id into prod_model
+                     from p_m in prod_model.DefaultIfEmpty()
+                     join d in _makeRepo.Table on p_bv.MakeID equals d.Id into prod_make
+                     from p_md in prod_make.DefaultIfEmpty()
+                     join e in _engineRepo.Table on p_md.Id equals e.VehicleRecordID into prod_engine
+                     from p_e in prod_engine.DefaultIfEmpty()
+                     select new
+                     {
+                         q.ProductID,
+                         pv.Id,
+                         p_md.MakeName,
+                         p_m.ModelName,
+                         p_bv.Year,
+                         pv.Trim,
+                         p_e.EngineDesc
+
+                     }).ToList();
+            foreach(var rs in result)
+            {
+                var fitment = new Fitment
+                {
+                    ProductID = rs.ProductID,
+                    EngineDescription = rs.EngineDesc,
+                    MakeName = rs.MakeName,
+                    ModelName = rs.ModelName,
+                    Trim = rs.Trim,
+                    Year = rs.Year
+                };
+                fitments.Add(fitment);
+                //fitment.ProductID = rs.ProductID;
+
+            }
+            var fitmentPL = new PagedList<Fitment>(fitments, pageIndex, pageSize);
+            return fitmentPL;
         }
     }
 }

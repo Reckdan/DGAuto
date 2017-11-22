@@ -6,3 +6,11 @@ C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\AutoPartsNew\Prese
 C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\AutoPartsNew\Plugins\Nop.Plugin.ExchangeRate.EcbExchange\obj\Debug\Nop.Plugin.ExchangeRate.EcbExchange.csprojResolveAssemblyReference.cache
 C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\AutoPartsNew\Plugins\Nop.Plugin.ExchangeRate.EcbExchange\obj\Debug\Nop.Plugin.ExchangeRate.EcbExchange.dll
 C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\AutoPartsNew\Plugins\Nop.Plugin.ExchangeRate.EcbExchange\obj\Debug\Nop.Plugin.ExchangeRate.EcbExchange.pdb
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\DGAuto\Presentation\Nop.Web\Plugins\ExchangeRate.EcbExchange\Description.txt
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\DGAuto\Presentation\Nop.Web\Plugins\ExchangeRate.EcbExchange\logo.jpg
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\DGAuto\Presentation\Nop.Web\Plugins\ExchangeRate.EcbExchange\Nop.Plugin.ExchangeRate.EcbExchange.dll.config
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\DGAuto\Presentation\Nop.Web\Plugins\ExchangeRate.EcbExchange\Nop.Plugin.ExchangeRate.EcbExchange.dll
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\DGAuto\Presentation\Nop.Web\Plugins\ExchangeRate.EcbExchange\Nop.Plugin.ExchangeRate.EcbExchange.pdb
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\DGAuto\Plugins\Nop.Plugin.ExchangeRate.EcbExchange\obj\Debug\Nop.Plugin.ExchangeRate.EcbExchange.csprojResolveAssemblyReference.cache
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\DGAuto\Plugins\Nop.Plugin.ExchangeRate.EcbExchange\obj\Debug\Nop.Plugin.ExchangeRate.EcbExchange.dll
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\DGAuto\Plugins\Nop.Plugin.ExchangeRate.EcbExchange\obj\Debug\Nop.Plugin.ExchangeRate.EcbExchange.pdb

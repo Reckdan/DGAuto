@@ -388,6 +388,7 @@
     <Compile Include="Models\Common\LanguageSelectorModel.cs" />
     <Compile Include="Models\Common\SitemapModel.cs" />
     <Compile Include="Models\Customer\EmailRevalidationModel.cs" />
+    <Compile Include="Models\Fitment\FitmentSearchModel.cs" />
     <Compile Include="Models\Vendors\ApplyVendorModel.cs" />
     <Compile Include="Models\Customer\CustomerAttributeModel.cs" />
     <Compile Include="Models\Catalog\CustomerBackInStockSubscriptionsModel.cs" />
@@ -973,6 +974,98 @@
     <Content Include="Scripts\public.onepagecheckout.js" />
     <Content Include="Scripts\public.common.js" />
     <Content Include="Themes\DefaultClean\Content\css\print.css" />
+    <Content Include="Themes\NopElectro-Premium\Content\css\bootstrap.css" />
+    <Content Include="Themes\NopElectro-Premium\Content\css\bootstrap.rtl.css" />
+    <Content Include="Themes\NopElectro-Premium\Content\css\bootstrap\bootstrap-theme.css" />
+    <Content Include="Themes\NopElectro-Premium\Content\css\bootstrap\bootstrap-theme.min.css" />
+    <Content Include="Themes\NopElectro-Premium\Content\css\bootstrap\bootstrap.css" />
+    <Content Include="Themes\NopElectro-Premium\Content\css\bootstrap\bootstrap.min.css" />
+    <Content Include="Themes\NopElectro-Premium\Content\css\fontAwesome\css\font-awesome.css" />
+    <Content Include="Themes\NopElectro-Premium\Content\css\fontAwesome\css\font-awesome.min.css" />
+    <Content Include="Themes\NopElectro-Premium\Content\css\fontAwesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="Themes\NopElectro-Premium\Content\css\ie8.css" />
+    <Content Include="Themes\NopElectro-Premium\Content\css\owl.carousel.css" />
+    <Content Include="Themes\NopElectro-Premium\Content\css\owl.carousel.rtl.css" />
+    <Content Include="Themes\NopElectro-Premium\Content\css\print.css" />
+    <Content Include="Themes\NopElectro-Premium\Content\css\scheme\green.css" />
+    <Content Include="Themes\NopElectro-Premium\Content\css\scheme\multi.css" />
+    <Content Include="Themes\NopElectro-Premium\Content\css\scheme\yellow.css" />
+    <Content Include="Themes\NopElectro-Premium\Content\css\select2\select2.css" />
+    <Content Include="Themes\NopElectro-Premium\Content\css\select2\select2.min.css" />
+    <Content Include="Themes\NopElectro-Premium\Content\css\styles.css" />
+    <Content Include="Themes\NopElectro-Premium\Content\css\styles.rtl.css" />
+    <Content Include="Themes\NopElectro-Premium\Content\css\sweetalert\sweetalert2.min.css" />
+    <Content Include="Themes\NopElectro-Premium\Content\images\add-to-cart-icon.png" />
+    <Content Include="Themes\NopElectro-Premium\Content\images\ajax-loader-small.gif" />
+    <Content Include="Themes\NopElectro-Premium\Content\images\back-button.png" />
+    <Content Include="Themes\NopElectro-Premium\Content\images\bg-newsletter.jpg" />
+    <Content Include="Themes\NopElectro-Premium\Content\images\calendar-next.png" />
+    <Content Include="Themes\NopElectro-Premium\Content\images\calendar-prev.png" />
+    <Content Include="Themes\NopElectro-Premium\Content\images\carousel-arrows.png" />
+    <Content Include="Themes\NopElectro-Premium\Content\images\category-title-bg.jpg" />
+    <Content Include="Themes\NopElectro-Premium\Content\images\close.png" />
+    <Content Include="Themes\NopElectro-Premium\Content\images\compare-button.png" />
+    <Content Include="Themes\NopElectro-Premium\Content\images\details.png" />
+    <Content Include="Themes\NopElectro-Premium\Content\images\discontinued-product-icon.png" />
+    <Content Include="Themes\NopElectro-Premium\Content\images\download-button.png" />
+    <Content Include="Themes\NopElectro-Premium\Content\images\edit.png" />
+    <Content Include="Themes\NopElectro-Premium\Content\images\edit_.png" />
+    <Content Include="Themes\NopElectro-Premium\Content\images\email-button.png" />
+    <Content Include="Themes\NopElectro-Premium\Content\images\first.png" />
+    <Content Include="Themes\NopElectro-Premium\Content\images\ie_warning.jpg" />
+    <Content Include="Themes\NopElectro-Premium\Content\images\last.png" />
+    <Content Include="Themes\NopElectro-Premium\Content\images\loading.gif" />
+    <Content Include="Themes\NopElectro-Premium\Content\images\logo.png" />
+    <Content Include="Themes\NopElectro-Premium\Content\images\menu-icon.png" />
+    <Content Include="Themes\NopElectro-Premium\Content\images\move.png" />
+    <Content Include="Themes\NopElectro-Premium\Content\images\new.png" />
+    <Content Include="Themes\NopElectro-Premium\Content\images\next.png" />
+    <Content Include="Themes\NopElectro-Premium\Content\images\pointer.png" />
+    <Content Include="Themes\NopElectro-Premium\Content\images\prev.png" />
+    <Content Include="Themes\NopElectro-Premium\Content\images\quickview-icon.png" />
+    <Content Include="Themes\NopElectro-Premium\Content\images\rating1.png" />
+    <Content Include="Themes\NopElectro-Premium\Content\images\rating2.png" />
+    <Content Include="Themes\NopElectro-Premium\Content\images\remove.png" />
+    <Content Include="Themes\NopElectro-Premium\Content\images\remove_.png" />
+    <Content Include="Themes\NopElectro-Premium\Content\images\reply.png" />
+    <Content Include="Themes\NopElectro-Premium\Content\images\return.png" />
+    <Content Include="Themes\NopElectro-Premium\Content\images\rss.png" />
+    <Content Include="Themes\NopElectro-Premium\Content\images\secured.jpg" />
+    <Content Include="Themes\NopElectro-Premium\Content\images\shipping.png" />
+    <Content Include="Themes\NopElectro-Premium\Content\images\shopping-bag.png" />
+    <Content Include="Themes\NopElectro-Premium\Content\images\small-toggle-white.png" />
+    <Content Include="Themes\NopElectro-Premium\Content\images\social-sprite.png" />
+    <Content Include="Themes\NopElectro-Premium\Content\images\subscribe-button.png" />
+    <Content Include="Themes\NopElectro-Premium\Content\images\toggle-black.png" />
+    <Content Include="Themes\NopElectro-Premium\Content\images\toggle-gray.png" />
+    <Content Include="Themes\NopElectro-Premium\Content\images\toggle-white.png" />
+    <Content Include="Themes\NopElectro-Premium\Content\images\topic-type1.png" />
+    <Content Include="Themes\NopElectro-Premium\Content\images\topic-type2.png" />
+    <Content Include="Themes\NopElectro-Premium\Content\images\topic-type3.png" />
+    <Content Include="Themes\NopElectro-Premium\Content\images\view-grid.png" />
+    <Content Include="Themes\NopElectro-Premium\Content\images\view-list.png" />
+    <Content Include="Themes\NopElectro-Premium\Content\images\vote-down-selected.png" />
+    <Content Include="Themes\NopElectro-Premium\Content\images\vote-down.png" />
+    <Content Include="Themes\NopElectro-Premium\Content\images\vote-up-selected.png" />
+    <Content Include="Themes\NopElectro-Premium\Content\images\vote-up.png" />
+    <Content Include="Themes\NopElectro-Premium\Content\images\watch.png" />
+    <Content Include="Themes\NopElectro-Premium\Content\images\wishlist-button.png" />
+    <Content Include="Themes\NopElectro-Premium\Content\js\bootstrap.min.js" />
+    <Content Include="Themes\NopElectro-Premium\Content\js\carousel.js" />
+    <Content Include="Themes\NopElectro-Premium\Content\js\carousel.rtl.js" />
+    <Content Include="Themes\NopElectro-Premium\Content\js\jquery.bpopup.min.js" />
+    <Content Include="Themes\NopElectro-Premium\Content\js\jquery.dotdotdot.min.js" />
+    <Content Include="Themes\NopElectro-Premium\Content\js\jquery.elevatezoom.js" />
+    <Content Include="Themes\NopElectro-Premium\Content\js\owl.carousel.min.js" />
+    <Content Include="Themes\NopElectro-Premium\Content\js\public.ajaxcart.js" />
+    <Content Include="Themes\NopElectro-Premium\Content\js\public.common.js" />
+    <Content Include="Themes\NopElectro-Premium\Content\js\searchvehicle.js" />
+    <Content Include="Themes\NopElectro-Premium\Content\js\select2\select2.full.js" />
+    <Content Include="Themes\NopElectro-Premium\Content\js\select2\select2.full.min.js" />
+    <Content Include="Themes\NopElectro-Premium\Content\js\select2\select2.js" />
+    <Content Include="Themes\NopElectro-Premium\Content\js\select2\select2.min.js" />
+    <Content Include="Themes\NopElectro-Premium\Content\js\sweetalert\sweetalert2.min.js" />
+    <Content Include="Themes\NopElectro-Premium\preview.jpg" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -1029,9 +1122,52 @@
     <Content Include="Views\Vendor\Info.cshtml" />
     <Content Include="Views\Common\Logo.cshtml" />
     <Content Include="Views\Customer\EmailRevalidation.cshtml" />
+    <Content Include="Themes\NopElectro-Premium\theme.config" />
+    <Content Include="Themes\NopElectro-Premium\Views\Catalog\CategoryTemplate.ProductsInGridOrLines.cshtml" />
+    <Content Include="Themes\NopElectro-Premium\Views\Catalog\HomepageCategories.cshtml" />
+    <Content Include="Themes\NopElectro-Premium\Views\Catalog\ManufacturerAll.cshtml" />
+    <Content Include="Themes\NopElectro-Premium\Views\Checkout\OnePageCheckout.cshtml" />
+    <Content Include="Themes\NopElectro-Premium\Views\Common\Footer.cshtml" />
+    <Content Include="Themes\NopElectro-Premium\Views\Common\HeaderLinks.cshtml" />
+    <Content Include="Themes\NopElectro-Premium\Views\Home\Index.cshtml" />
+    <Content Include="Themes\NopElectro-Premium\Views\Newsletter\NewsletterBox.cshtml" />
+    <Content Include="Themes\NopElectro-Premium\Views\Product\CrossSellProducts.cshtml" />
+    <Content Include="Themes\NopElectro-Premium\Views\Product\HomepageBestSellers.cshtml" />
+    <Content Include="Themes\NopElectro-Premium\Views\Product\HomepageProducts.cshtml" />
+    <Content Include="Themes\NopElectro-Premium\Views\Product\ProductsAlsoPurchased.cshtml" />
+    <Content Include="Themes\NopElectro-Premium\Views\Product\ProductTemplate.Grouped.cshtml" />
+    <Content Include="Themes\NopElectro-Premium\Views\Product\ProductTemplate.Simple.cshtml" />
+    <Content Include="Themes\NopElectro-Premium\Views\Product\RelatedProducts.cshtml" />
+    <Content Include="Themes\NopElectro-Premium\Views\Product\_AddToCart.cshtml" />
+    <Content Include="Themes\NopElectro-Premium\Views\Product\_AddToWishlist.cshtml" />
+    <Content Include="Themes\NopElectro-Premium\Views\Product\_CompareProductsButton.cshtml" />
+    <Content Include="Themes\NopElectro-Premium\Views\Product\_ProductAttributes.cshtml" />
+    <Content Include="Themes\NopElectro-Premium\Views\Product\_ProductDetailsPictures.cshtml" />
+    <Content Include="Themes\NopElectro-Premium\Views\Product\_RentalInfo.cshtml" />
+    <Content Include="Themes\NopElectro-Premium\Views\Shared\Head.cshtml" />
+    <Content Include="Themes\NopElectro-Premium\Views\Shared\Header.cshtml" />
+    <Content Include="Themes\NopElectro-Premium\Views\Shared\_Notifications.cshtml" />
+    <Content Include="Themes\NopElectro-Premium\Views\Shared\_ProductBox.cshtml" />
+    <Content Include="Themes\NopElectro-Premium\Views\Shared\_Root.cshtml" />
+    <Content Include="Themes\NopElectro-Premium\Views\Shared\_Root.Head.cshtml" />
+    <Content Include="Themes\NopElectro-Premium\Views\Shared\_RootQuickView.cshtml" />
+    <Content Include="Themes\NopElectro-Premium\Views\ShoppingCart\FlyoutShoppingCart.cshtml" />
+    <Content Include="Themes\NopElectro-Premium\Views\Web.config" />
+    <Content Include="Views\Catalog\_vehicleSearch.cshtml" />
+    <Content Include="Themes\NopElectro-Premium\Content\css\bootstrap\bootstrap-theme.css.map" />
+    <Content Include="Themes\NopElectro-Premium\Content\css\bootstrap\bootstrap-theme.min.css.map" />
+    <Content Include="Themes\NopElectro-Premium\Content\css\bootstrap\bootstrap.css.map" />
+    <Content Include="Themes\NopElectro-Premium\Content\css\bootstrap\bootstrap.min.css.map" />
+    <Content Include="Themes\NopElectro-Premium\Content\css\fontAwesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="Themes\NopElectro-Premium\Content\css\fontAwesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Themes\NopElectro-Premium\Content\css\fontAwesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="Themes\NopElectro-Premium\Content\css\fontAwesome\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Themes\NopElectro-Premium\Content\css\fontAwesome\fonts\FontAwesome.otf" />
+    <Content Include="Views\Product\_vehicleFit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />
+    <Folder Include="Themes\NopElectro-Premium\Content\js\select2\i18n\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Libraries\Nop.Core\Nop.Core.csproj">
@@ -1049,6 +1185,10 @@
     <ProjectReference Include="..\Nop.Web.Framework\Nop.Web.Framework.csproj">
       <Project>{75FD4163-333C-4DD5-854D-2EF294E45D94}</Project>
       <Name>Nop.Web.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="Administration\Nop.Admin.csproj">
+      <Project>{152C761A-DD2E-4C1F-AF89-DFB2547A3BCA}</Project>
+      <Name>Nop.Admin</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

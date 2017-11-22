@@ -1,0 +1,393 @@
+﻿@model Nop.Admin.Models.Fitment.VFitmentModel
+
+<div id="selectedVehicle" class="alert alert-success" role="alert">
+    <button data-dismiss="alert" class="close">
+        &times;
+    </button>
+    <i class="fa fa-check"></i>
+    <strong>  <small>@ViewBag.CurrentVehicle</small></strong>
+</div>
+<input type="hidden" name="produtfit" id="productfit" value="@ViewBag.ProductFit" />
+<input type="hidden" id="curVehicle" value="@ViewBag.CurrentVehicle" /> 
+<div class="alert alert-block alert-info fade in" id="fitForm">
+    
+    <h4 class="alert-heading"><i class="fa fa-info-circle"></i> Check Vehicle Fit!</h4>
+
+    <p>
+
+        @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "fitment-form" }))
+        {
+            @Html.AntiForgeryToken()
+
+            @*@Html.Partial("_CreateOrUpdate", Model)*@
+            @Html.HiddenFor(model=>model.ProductID)
+            <div id="example">
+                @*alert alert-danger*@
+                <div class="row" id="vehicleSearch">
+                   
+                    <div id="formdata">
+                        <div class="row">
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+
+
+
+                                    @*@Html.NopEditorFor(model => model.Sku)*@
+
+                                    @*@Html.Editor(Model.Sku)*@
+                                    @*<input id="startyear" placeholder="From" style="width: 100%;" />*@
+                                    @Html.DropDownList("Year", Model.YearList, new { @class = "form-control input-sm" })
+                                    @*  @Html.DropDownList("Year",Model.YearList,"Select Year", new { @class = "form-control" })*@
+
+
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+
+
+                                    <select class="form-control input-sm" id="Make" disabled="disabled">
+                                        <option value="0" selected="selected">Select Make</option>
+                                    </select>
+                                    @*<input id="make" disabled="disabled" style="width: 100%;" />*@
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+
+
+                                    <select class="form-control input-sm" id="Model" disabled="disabled">
+                                        <option value="0" selected="selected" disabled="disabled">Select Model</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-3">
+                                <div class="form-group" id="trim-dv">
+
+
+                                    <select class="form-control input-sm" id="Trim" disabled="disabled">
+                                        <option value="0" selected="selected">Trim</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group" id="engine-dv">
+
+
+                                    <select class="form-control input-sm" id="Engine" disabled="disabled">
+                                        <option value="0" selected="selected">Engine</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="content-header clearfix">
+
+                            <div class="pull-right">
+
+                                <button type="submit" name="save" class="btn bg-blue" id="CheckFit">
+                                    <i class="fa fa-floppy-o"></i>
+                                    Check Fit
+                                </button>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+
+        }
+    </p>
+
+</div>
+<script>
+    var dataobjects = [];
+    function disableFind() {
+        var year = $('#Year').val();
+        var make = $('#Make').val();
+        var model = $('#Model').val();
+        //alert(year+' ' +make+' '+model)
+        if (year > 0 && make > 0 && model > 0) {
+            $("#CheckFit").prop('disabled', false);
+            $("#CheckFit").attr('class', 'btn btn-primary');
+        } else {
+            $("#CheckFit").prop('disabled', true);
+            $("#CheckFit").attr('class', 'btn btn-default');
+
+        }
+    }
+    $(document).ready(function () {
+        $("#trim-dv").hide();
+        $("#engine-dv").hide();
+        // $("#FindParts").prop('disabled', true);
+        var productfit = $("#productfit").val();
+        var curvehicle = $("#curVehicle").val();
+
+        disableFind();
+
+        if (productfit == 0) {
+            $("#fitForm").show();
+            $("#selectedVehicle").hide();
+            swal('Oops...',
+                             'Your Current vehicle (' + curvehicle + ') is not compatible with this part',
+                                 'error');
+        } else if(productfit==1) {
+            $("#fitForm").hide();
+            $("#selectedVehicle").show();
+        } else {
+            $("#fitForm").show();
+            $("#selectedVehicle").hide();
+        }
+
+        function listMake(){
+            var mYear={
+                year: $("#Year").val(),
+                EndYear: "0"
+            };
+            //addAntiForgeryToken(mYear);
+
+            //alert(mYear.year);
+
+
+            $('#Make').attr("disabled",false);
+            $.ajax({
+                url: "@Url.Action("ListMake", "Catalog")",
+                type: "GET",
+            dataType: "json",
+            data: mYear,
+            success: function (makes) {
+                // alert('1');
+               // alert(makes[0].text);
+                $("#Make").html(""); // clear before appending new list
+                //alert('2');
+                dataobjects=$.map(makes,function(el) {return el});
+                //alert(dataobjects.length);
+                //alert(dataobjects.length);
+                //$.each(dataobjects, function (key, value) {
+                //    $('#Make select').append('<option value=' + value.id + '>' + value.text + '</option>');
+                //}
+                //);
+
+                $("#Make").select2({data:dataobjects,
+                    placeholder:"Select Make"
+
+                });
+
+            },
+
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert(xhr.responseText);
+            }
+        });
+        }
+
+        
+        $('#selectedVehicle').on('closed.bs.alert', function () {
+            $.ajax({
+                url: "@Url.Action("ClearCureentVehicle", "Product")",
+                type: "GET",
+            dataType: "json",
+            //data: mYear,
+            success: function (data) {
+                // alert('1');
+                $("#fitForm").show();
+                $("#selectedVehicle").html('');
+                swal('Oops...',
+                'Please Select your vehicle Make, Model and Year',
+                'error');
+            },
+
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert(xhr.responseText);
+            }
+        });
+    })
+
+        $("#CheckFit").click(function (e) {
+            e.preventDefault();
+
+            var postData = {
+                Year: $("#Year").val(),
+                MakeID: $("#Make").val(),
+                ModelID: $("#Model").val(),
+                VehicleID: $("#Trim").val(),
+                EngineID: $("#Egine").val(),
+                ProductID: $("#ProductID").val()
+            };
+
+            $.ajax({
+                url: "@Url.Action("CheckProductFit", "Product")",
+                type: "POST",
+                dataType: "json",
+                data: postData,
+                success: function (data) {
+                    // alert('1');
+                    if (data.ProductFit==0) {
+                        swal('Oops...',
+                             'Your Current vehicle (' + data.SelectVehicle + ') is not compatible with this part',
+                                 'error');
+
+
+                    } else {
+                        $("#fitForm").hide();
+                        $("#selectedVehicle").show();
+                        //$("#selectedVehicle").html('<div id="success" class="alert alert-success" role="alert">'+
+                        //    '<button data-dismiss="alert" class="close">'+
+                        //        '&times;'+
+                        //    '</button>'+
+                        //   '<i class="fa fa-check"></i>'+
+                        //'<strong><small>'+data.SelectVehicle+'</small></strong>'+
+                        //'</div>');
+                    }
+                },
+
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert(xhr.responseText);
+                }
+            });
+
+        });
+
+
+
+
+        $("#Year").change(function(){
+            listMake();
+            $("#Trim").html("");
+            $("#Model").html("");
+            $("#Engine").html("");
+            disableFind();
+        });
+
+
+
+    $("#Make").change(function(){
+        listModel();
+        $("#Trim").html("");
+        $("#Engine").html("");
+        disableFind();
+    });
+
+    function listModel(){
+        var mYear={
+            year: $("#Year").val(),
+            EndYear: "0",
+            MakeID: $("#Make").val()
+
+        };
+        //addAntiForgeryToken(mYear);
+
+        //alert(mYear.year);
+
+
+        $('#Model').attr("disabled",false);
+
+        $.ajax({
+            url: "@Url.Action("ListModel", "Catalog")",
+            type: "GET",
+        dataType: "json",
+        data: mYear,
+        success: function (models) {
+            //alert('1');
+            $("#Model").html(""); // clear before appending new list
+            //alert('2');
+            dataobjects=$.map(models,function(el) {return el});
+            //alert(dataobjects.length);
+            $("#Model").select2({data:dataobjects,
+                placeholder:"Select Model"});
+
+        }
+    });
+    }
+
+    function listTrim(){
+        var mYear={
+            year: $("#Year").val(),
+            EndYear:"0",
+            MakeID: $("#Make").val(),
+            ModelID: $('#Model').val()
+
+        };
+        //addAntiForgeryToken(mYear);
+
+        //alert(mYear.year);
+        //if(!$('#yearrange').is(":checked")){
+
+        $("#trim-dv").show();
+        $('#Trim').attr("disabled",false);
+        // alert(mYear.ModelID);
+        $.ajax({
+            url: "@Url.Action("ListTrim", "Catalog")",
+            type: "GET",
+        dataType: "json",
+        data: mYear,
+        success: function (models) {
+            //alert('1');
+            $("#Trim").html(""); // clear before appending new list
+            //alert('2');
+            dataobjects=$.map(models,function(el) {return el});
+            //alert(dataobjects.length);
+            $("#Trim").select2({data:dataobjects,
+                placeholder:"Select Trinm"});
+
+        }
+    });
+    }
+    $("#Model").change(function(){
+        listTrim();
+        $("#Engine").html("");
+        disableFind();
+
+    });
+
+    function listEngine(){
+        var mYear={
+
+            VehicelID: $('#Trim').val()
+
+        };
+        //addAntiForgeryToken(mYear);
+
+        //alert(mYear.year);
+        //if(!$('#yearrange').is(":checked")){
+
+        $("#engine-dv").show();
+
+        $('#Engine').attr("disabled",false);
+        //alert(mYear.VehicleID);
+        $.ajax({
+            url: "@Url.Action("ListEngine", "Catalog")",
+            type: "GET",
+        dataType: "json",
+        data: mYear,
+        success: function (models) {
+            //alert('1');
+            $("#Engine").html(""); // clear before appending new list
+            //alert('2');
+            dataobjects=$.map(models,function(el) {return el});
+            //alert(dataobjects.length);
+            $("#Engine").select2({data:dataobjects,
+                placeholder:"Select Engine...."});
+
+        }
+    });
+    }
+
+    $("#Trim").change(function(){
+
+        listEngine();
+        disableFind();
+
+    });
+
+    });
+</script>

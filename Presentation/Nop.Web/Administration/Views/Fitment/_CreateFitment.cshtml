@@ -1,0 +1,96 @@
+﻿@model Nop.Admin.Models.Fitment.VFitmentModel
+
+
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "fitment-form" }))
+{
+    @Html.AntiForgeryToken()
+
+    @*@Html.Partial("_CreateOrUpdate", Model)*@
+    <div id="example">
+
+        <div class="form-horizontal">
+
+            <div class="form-group">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-10 checkbox">
+                    <label>
+                        <input id="yearrange" type="checkbox" value="">
+                        Use Year Range
+                    </label>
+                </div>
+
+
+
+            </div>
+            <div class="form-group">
+
+                <label class="col-sm-2" control-label>Year</label>
+                <div class="col-sm-5">
+                    @*@Html.NopEditorFor(model => model.Sku)*@
+                    
+                    @*@Html.Editor(Model.Sku)*@
+                    @*<input id="startyear" placeholder="From" style="width: 100%;" />*@
+                    @Html.NopDropDownList("Year", Model.YearList)
+                    @*  @Html.DropDownList("Year",Model.YearList,"Select Year", new { @class = "form-control" })*@
+                </div>
+                <div class="col-sm-5">
+                    @Html.DropDownList("EndYear",Model.YearList,"Select End Year", new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2" for="make">Make</label>
+                <div class="col-sm-10">
+                    <select class="form-control" id="Make" disabled="disabled">
+                        <option value="0" selected="selected">Select Make</option>
+                    </select>
+                    @*<input id="make" disabled="disabled" style="width: 100%;" />*@
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2" for="model">Model</label>
+                <div class="col-sm-10">
+                    <select class="form-control" id="Model" disabled="disabled">
+                        <option value="0" selected="selected" disabled="disabled">Select Model</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2" for="trim">Trim</label>
+                <div class="col-sm-10">
+                    <select class="form-control" id="Trim" disabled="disabled">
+                        <option value="0" selected="selected">Trim</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2" for="engine">Engine</label>
+                <div class="col-sm-10">
+                    <select class="form-control" id="Engine" disabled="disabled">
+                        <option value="0" selected="selected" >Engine</option>
+                    </select>
+                </div>
+            </div>
+
+        </div>
+        <div class="content-header clearfix">
+
+            <div class="pull-right">
+              
+                <button type="submit" name="save" class="btn bg-blue" id="SaveFitment">
+                    <i class="fa fa-floppy-o"></i>
+                    @T("Admin.Common.Save")
+                </button>
+                <button type="submit" name="cancel" class="btn bg-blue" id="cancelFitment">
+                    <i class="fa fa-remove"></i>
+                    Close
+                </button>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+}

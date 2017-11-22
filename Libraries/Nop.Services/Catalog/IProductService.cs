@@ -128,7 +128,11 @@ namespace Nop.Services.Catalog
             IList<int> filteredSpecs = null,
             ProductSortingEnum orderBy = ProductSortingEnum.Position,
             bool showHidden = false,
-            bool? overridePublished = null);
+            bool? overridePublished = null,
+             int basevehicleId = 0,
+            int vehicleId = 0,
+            int engineId = 0,
+            int conditionId=0);
 
         /// <summary>
         /// Search products
@@ -190,7 +194,11 @@ namespace Nop.Services.Catalog
             IList<int> filteredSpecs = null, 
             ProductSortingEnum orderBy = ProductSortingEnum.Position,
             bool showHidden = false,
-            bool? overridePublished = null);
+            bool? overridePublished = null,
+            int basevicleID = 0,
+            int vehicleId = 0,
+            int engineId = 0,
+            int conditionId=0);
 
         /// <summary>
         /// Gets products by product attribute

@@ -16,6 +16,10 @@ using Nop.Services.Vendors;
 using Nop.Web.Factories;
 using Nop.Web.Framework.Security;
 using Nop.Web.Models.Catalog;
+using Nop.Admin.Models.Fitment;
+using Nop.Services.Fitment;
+using Nop.Core.Domain.Fitment;
+using System.Collections.Generic;
 
 namespace Nop.Web.Controllers
 {
@@ -31,6 +35,7 @@ namespace Nop.Web.Controllers
         private readonly IVendorService _vendorService;
         private readonly IWorkContext _workContext;
         private readonly IStoreContext _storeContext;
+        private readonly IFitmentService _fitmentService;
         private readonly ILocalizationService _localizationService;
         private readonly IWebHelper _webHelper;
         private readonly IProductTagService _productTagService;
@@ -65,7 +70,8 @@ namespace Nop.Web.Controllers
             ICustomerActivityService customerActivityService,
             MediaSettings mediaSettings,
             CatalogSettings catalogSettings,
-            VendorSettings vendorSettings)
+            VendorSettings vendorSettings,
+            IFitmentService fitmentService)
         {
             this._catalogModelFactory = catalogModelFactory;
             this._productModelFactory = productModelFactory;
@@ -86,6 +92,7 @@ namespace Nop.Web.Controllers
             this._mediaSettings = mediaSettings;
             this._catalogSettings = catalogSettings;
             this._vendorSettings = vendorSettings;
+            this._fitmentService = fitmentService;
         }
 
         #endregion
@@ -95,6 +102,9 @@ namespace Nop.Web.Controllers
         [NopHttpsRequirement(SslRequirement.No)]
         public virtual ActionResult Category(int categoryId, CatalogPagingFilteringModel command)
         {
+            command.BaseVehicleID = Session["BaseVehicleID"] == null ? 0 : int.Parse(Session["BaseVehicleID"].ToString());
+            command.VehicleID = Session["VehicleID"] == null ? 0 : int.Parse(Session["VehicleID"].ToString());
+            command.EngineID = Session["EngineID"] == null ? 0 : int.Parse(Session["EngineID"].ToString());
             var category = _categoryService.GetCategoryById(categoryId);
             if (category == null || category.Deleted)
                 return InvokeHttp404();
@@ -164,6 +174,9 @@ namespace Nop.Web.Controllers
         public virtual ActionResult Manufacturer(int manufacturerId, CatalogPagingFilteringModel command)
         {
             var manufacturer = _manufacturerService.GetManufacturerById(manufacturerId);
+            command.BaseVehicleID = Session["BaseVehicleID"] == null ? 0 : int.Parse(Session["BaseVehicleID"].ToString());
+            command.VehicleID = Session["VehicleID"] == null ? 0 : int.Parse(Session["VehicleID"].ToString());
+            command.EngineID = Session["EngineID"] == null ? 0 : int.Parse(Session["EngineID"].ToString());
             if (manufacturer == null || manufacturer.Deleted)
                 return InvokeHttp404();
 
@@ -228,6 +241,9 @@ namespace Nop.Web.Controllers
         [NopHttpsRequirement(SslRequirement.No)]
         public virtual ActionResult Vendor(int vendorId, CatalogPagingFilteringModel command)
         {
+            command.EngineID = Session["Engine"] == null ? 0 : int.Parse(Session["EngineID"].ToString());
+            command.VehicleID = Session["VehicleID"] == null ? 0 : int.Parse(Session["VehicleID"].ToString());
+            command.BaseVehicleID = Session["EngineID"] == null ? 0 : int.Parse(Session["EngineID"].ToString());
             var vendor = _vendorService.GetVendorById(vendorId);
             if (vendor == null || vendor.Deleted || !vendor.Active)
                 return InvokeHttp404();
@@ -290,6 +306,9 @@ namespace Nop.Web.Controllers
         [NopHttpsRequirement(SslRequirement.No)]
         public virtual ActionResult ProductsByTag(int productTagId, CatalogPagingFilteringModel command)
         {
+            command.BaseVehicleID = Session["BaseVehicleID"] == null ? 0 : int.Parse(Session["BaseVehicleID"].ToString());
+            command.VehicleID = Session["VehicleID"] == null ? 0 : int.Parse(Session["VehicleID"].ToString());
+            command.EngineID = Session["EngineID"] == null ? 0 : int.Parse(Session["EngineID"].ToString());
             var productTag = _productTagService.GetProductTagById(productTagId);
             if (productTag == null)
                 return InvokeHttp404();
@@ -313,6 +332,9 @@ namespace Nop.Web.Controllers
         [ValidateInput(false)]
         public virtual ActionResult Search(SearchModel model, CatalogPagingFilteringModel command)
         {
+            command.BaseVehicleID = Session["BaseVehicleID"] == null ? 0 : int.Parse(Session["BaseVehicleID"].ToString());
+            command.VehicleID = Session["VehicleID"]==null?0: int.Parse(Session["VehicleID"].ToString());
+            command.EngineID = Session["EngineID"]==null?0: int.Parse(Session["EngineID"].ToString());
             //'Continue shopping' URL
             _genericAttributeService.SaveAttribute(_workContext.CurrentCustomer,
                 SystemCustomerAttributeNames.LastContinueShoppingPage,
@@ -323,9 +345,51 @@ namespace Nop.Web.Controllers
                 model = new SearchModel();
 
             model = _catalogModelFactory.PrepareSearchModel(model, command);
+            var selList = from ProductCondition e in Enum.GetValues(typeof(ProductCondition))
+                          select new
+                          {
+                              id = (int)e,
+                              name = e.ToString()
+                          };
+            foreach (var data in selList)
+            {
+                model.Conditions.Add(new SelectListItem { Text = data.name, Value = data.id.ToString(), Selected = data.id == model.ConditionId ? true : false });
+            }
             return View(model);
         }
+        public virtual ActionResult SearchVehicle()
+        {
+            var model = new VFitmentModel();
 
+            if(Session["BaseVehicleID"]==null)
+                Session.Add("BaseVehicleID", "0");
+            
+            var years = _fitmentService.GetYears();
+            model.YearList.Add(new SelectListItem { Text = "Select Year", Value = "0" });
+            foreach (var y in years)
+            {
+                model.YearList.Add(new SelectListItem { Text = y.Year.ToString(), Value = y.Year.ToString(), Selected = y.Year == 1998 ? true : false });
+            }
+            int BaseVehicleID = int.Parse(Session["BaseVehicleID"].ToString());
+            //int MakeID = int.Parse(Session["BaseVehicleID"].ToString());
+            //int ModelID = int.Parse(Session["BaseVehicleID"].ToString());
+            string CurrentVehicle = "";
+            ViewBag.MessageStatus = "hidden";
+            ViewBag.FormStatus = "form-control";
+            ViewBag.hform = "0";
+            ViewBag.CurrentVehicle = CurrentVehicle;
+            if (BaseVehicleID!=0)
+            {
+                 CurrentVehicle = _fitmentService.GetBaseVehicleName(BaseVehicleID: BaseVehicleID);
+                ViewBag.MessageStatus = "alert alert-success";
+                ViewBag.CurrentVehicle =CurrentVehicle;
+                ViewBag.FormStatus = "hidden";
+                ViewBag.hform = "1";
+            }
+            
+            return PartialView("_vehicleSearch",model);
+        }
+     
         [ChildActionOnly]
         public virtual ActionResult SearchBox()
         {
@@ -362,6 +426,110 @@ namespace Nop.Web.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        #endregion
+
+
+
+        #region Search Vehicle
+        //[HttpPost]
+        //[AdminAntiForgery(true)]
+        [NopHttpsRequirement(SslRequirement.No)]
+        public ActionResult ListMake(int year, int EndYear)
+        {
+            // int mYear = (Fitment == null) ? 0 : Fitment.Year;
+            var makes = _fitmentService.ListMake(year: year, EndYear: EndYear);
+
+            List<Select2> makelist = new List<Select2>();
+            var distinctMakeList = makes.Distinct().ToList();
+
+            makelist.Add(new Select2 { id = 0, text = "Select Make" });
+            foreach (var make in distinctMakeList)
+                makelist.Add(new Select2 { id = make.Id, text = make.MakeName });
+
+            return Json(makelist, JsonRequestBehavior.AllowGet);
+
+        }
+
+        //[HttpPost]
+        //[AdminAntiForgery(true)]
+        [NopHttpsRequirement(SslRequirement.No)]
+        public ActionResult ListModel(int year, int EndYear, int MakeID)
+        {
+            // int mYear = (Fitment == null) ? 0 : Fitment.Year;
+            var models = _fitmentService.ListModel(year: year, EndYear: EndYear, MakeID: MakeID);
+
+            List<Select2> modelList = new List<Select2>();
+            var distinctModelList = models.Distinct().ToList();
+
+            modelList.Add(new Select2 { id = 0, text = "Select Model" });
+            foreach (var model in distinctModelList)
+                modelList.Add(new Select2 { id = model.Id, text = model.ModelName });
+
+            return Json(modelList,JsonRequestBehavior.AllowGet);
+
+        }
+
+
+        //[HttpPost]
+        //[AdminAntiForgery(true)]
+        [NopHttpsRequirement(SslRequirement.No)]
+        public ActionResult ListTrim(int year, int EndYear, int MakeID, int ModelID)
+        {
+            // int mYear = (Fitment == null) ? 0 : Fitment.Year;
+            var vehicles = _fitmentService.ListVehicle(year: year, EndYear: EndYear, MakeID: MakeID, ModelID: ModelID);
+
+            List<Select2> vehiclesList = new List<Select2>();
+            var distinctVehicleList = vehicles.Distinct().ToList();
+
+            vehiclesList.Add(new Select2 { id = 0, text = "Select Trim" });
+            foreach (var model in distinctVehicleList)
+                vehiclesList.Add(new Select2 { id = model.Id, text = model.Trim });
+
+            return Json(vehiclesList,JsonRequestBehavior.AllowGet);
+
+        }
+
+
+        //[HttpPost]
+        //[AdminAntiForgery(true)]
+        [NopHttpsRequirement(SslRequirement.No)]
+        public ActionResult ListEngine(int VehicelID)
+        {
+            // int mYear = (Fitment == null) ? 0 : Fitment.Year;
+            VehicleRecord vehicle = _fitmentService.GetVehicle(VehicelID);
+            var engines = _fitmentService.ListEngine(vehicle);
+
+            List<Select2> engineList = new List<Select2>();
+            var distinctEngineList = engines.Distinct().ToList();
+
+            engineList.Add(new Select2 { id = 0, text = "Select Engine" });
+            foreach (var model in distinctEngineList)
+                engineList.Add(new Select2 { id = model.Id, text = model.EngineDesc });
+
+            return Json(engineList,JsonRequestBehavior.AllowGet);
+
+        }
+        [HttpPost]
+        [NopHttpsRequirement(SslRequirement.No)]
+        public ActionResult FindParts(int Year=0, int MakeID=0,int ModelID=0, int VehicleID=0, int EngineID=0 )
+        {
+            var baseVehicle = _fitmentService.GetBaseVehicle(Year: Year, MakeID: MakeID, ModelID: ModelID);
+            Session.Add("BaseVehicleID", baseVehicle.Id);
+            Session.Add("VehicleID", VehicleID);
+            Session.Add("EngineID", EngineID);
+            //SearchModel model = new SearchModel();
+            //model.q = "";
+            return RedirectToAction("Search", new {@q="" });
+            //return Json("Success",JsonRequestBehavior.AllowGet);
+        }
+        [NopHttpsRequirement(SslRequirement.No)]
+        public ActionResult ClearCureentVehicle()
+        {
+            Session.Add("BaseVehicleID", "0");
+            Session.Add("VehicleID", "0");
+            Session.Add("EngineID", "0");
+            return Json("Success", JsonRequestBehavior.AllowGet);
+        }
         #endregion
     }
 }

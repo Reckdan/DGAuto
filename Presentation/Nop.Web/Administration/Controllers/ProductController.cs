@@ -969,7 +969,15 @@ namespace Nop.Admin.Controllers
 
             return View(model);
         }
-
+      
+        public virtual ActionResult ListProducts(string sku)
+        {
+            Vendor vendor = _workContext.CurrentVendor;
+            int vendorID = vendor==null ?0: vendor.Id;
+            string[] skus = new string[] { sku };
+            var products= _productService.GetProductsBySku(skus, vendorID);
+            return Json(products);
+        }
         [HttpPost]
         public virtual ActionResult ProductList(DataSourceRequest command, ProductListModel model)
         {
@@ -1074,7 +1082,17 @@ namespace Nop.Admin.Controllers
             }
 
             var model = new ProductModel();
-
+            var selList = from ProductCondition e in Enum.GetValues(typeof(ProductCondition))
+                          select new
+                          {
+                              id = (int)e,
+                              name = e.ToString()
+                          };
+            foreach(var data in selList)
+            {
+                if(data.id!=0)
+                model.Conditions.Add(new SelectListItem { Text = data.name, Value = data.id.ToString(), Selected = data.id == model.ConditionId ? true : false });
+            }
             PrepareProductModel(model, null, true, true);
             AddLocales(_languageService, model.Locales);
             PrepareAclModel(model, null, false);
@@ -1166,7 +1184,17 @@ namespace Nop.Admin.Controllers
             PrepareCategoryMappingModel(model, null, true);
             PrepareManufacturerMappingModel(model, null, true);
             PrepareDiscountMappingModel(model, null, true);
-
+            var selList = from ProductCondition e in Enum.GetValues(typeof(ProductCondition))
+                          select new
+                          {
+                              id = (int)e,
+                              name = e.ToString()
+                          };
+            foreach (var data in selList)
+            {
+                if (data.id != 0)
+                    model.Conditions.Add(new SelectListItem { Text = data.name, Value = data.id.ToString(), Selected = data.id == model.ConditionId ? true : false });
+            }
             return View(model);
         }
 
@@ -1203,7 +1231,17 @@ namespace Nop.Admin.Controllers
             PrepareCategoryMappingModel(model, product, false);
             PrepareManufacturerMappingModel(model, product, false);
             PrepareDiscountMappingModel(model, product, false);
-
+            var selList = from ProductCondition e in Enum.GetValues(typeof(ProductCondition))
+                          select new
+                          {
+                              id = (int)e,
+                              name = e.ToString()
+                          };
+            foreach (var data in selList)
+            {
+                if (data.id != 0)
+                    model.Conditions.Add(new SelectListItem { Text = data.name, Value = data.id.ToString(), Selected = data.id == model.ConditionId ? true : false });
+            }
             return View(model);
         }
 
@@ -1361,7 +1399,17 @@ namespace Nop.Admin.Controllers
             PrepareCategoryMappingModel(model, product, true);
             PrepareManufacturerMappingModel(model, product, true);
             PrepareDiscountMappingModel(model, product, true);
-
+            var selList = from ProductCondition e in Enum.GetValues(typeof(ProductCondition))
+                          select new
+                          {
+                              id = (int)e,
+                              name = e.ToString()
+                          };
+            foreach (var data in selList)
+            {
+                if (data.id != 0)
+                    model.Conditions.Add(new SelectListItem { Text = data.name, Value = data.id.ToString(), Selected = data.id == model.ConditionId ? true : false });
+            }
             return View(model);
         }
 

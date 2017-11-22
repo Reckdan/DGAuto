@@ -28,11 +28,11 @@ namespace Nop.Plugin.Extension.Vehicle
                 new[] { "Nop.Plugin.Extension.Vehicle.Controllers" });
             ViewEngines.Engines.Insert(0, new CustomViewEngine());
 
-            routes.MapRoute("Plugin.Extension.Vehicle.ListFitment",
-                "Vehicle/ListFitment",
-                new { Controller = "Vehicle", action = "ListFitment" },
-                new[] { "Nop.Plugin.Extension.Vehicle.Controllers" });
-            ViewEngines.Engines.Insert(0, new CustomViewEngine());
+            //routes.MapRoute("Plugin.Extension.Vehicle.ListFitment",
+            //    "Vehicle/ListFitment",
+            //    new { Controller = "Vehicle", action = "ListFitment" },
+            //    new[] { "Nop.Plugin.Extension.Vehicle.Controllers" });
+            //ViewEngines.Engines.Insert(0, new CustomViewEngine());
 
             routes.MapRoute("Plugin.Extension.Vehicle.ListProduct",
                "Vehicle/ListProducts",

@@ -1,0 +1,76 @@
+﻿@using Nop.Core;
+@using Nop.Core.Infrastructure
+@using Nop.Web.Framework.Themes
+@using Nop.Web.Framework.UI
+@{
+
+    if (Request.QueryString["quickview"] != "1")
+    {
+        var supportRtl = EngineContext.Current.Resolve<IWorkContext>().WorkingLanguage.Rtl;
+        var themeName = EngineContext.Current.Resolve<IThemeContext>().WorkingThemeName;
+        var storeContext = EngineContext.Current.Resolve<Nop.Core.IStoreContext>();
+
+        string color = Nop.Core.Infrastructure.EngineContext.Current.Resolve<Nop.Services.Configuration.ISettingService>().GetSettingByKey<string>(
+            "NopElectro.Color", "green", storeContext.CurrentStore.Id, true).ToLowerInvariant();
+
+        Html.AppendCssFileParts(string.Format("~/Themes/{0}/Content/css/scheme/" + color + ".css", themeName));
+
+        if (supportRtl)
+        {
+            Html.AppendCssFileParts(string.Format("~/Themes/{0}/Content/css/styles.rtl.css", themeName));
+            //bootstrap and slider CSS file - Pro nopCommerce
+            Html.AppendCssFileParts(string.Format("~/Themes/{0}/Content/css/owl.carousel.rtl.css", themeName));
+            Html.AppendCssFileParts(string.Format("~/Themes/{0}/Content/css/bootstrap.rtl.css", themeName));
+        }
+        else {
+            Html.AppendCssFileParts(string.Format("~/Themes/{0}/Content/css/sweetalert/sweetalert2.min.css", themeName));
+            Html.AppendCssFileParts(string.Format("~/Themes/{0}/Content/css/fontAwesome/css/font-awesome.min.css", themeName));
+            Html.AppendCssFileParts(string.Format("~/Themes/{0}/Content/css/styles.css", themeName));
+            //bootstrap and slider CSS file - Pro nopCommerce
+            Html.AppendCssFileParts(string.Format("~/Themes/{0}/Content/css/owl.carousel.css", themeName));
+
+            Html.AppendCssFileParts(string.Format("~/Themes/{0}/Content/css/select2/select2.min.css", themeName));
+            Html.AppendCssFileParts(string.Format("~/Themes/{0}/Content/css/bootstrap/bootstrap.min.css", themeName));
+            //Html.AppendCssFileParts(string.Format("~/Themes/{0}/Content/css/bootstrap.css", themeName));
+        }
+
+        //add browser specific CSS files
+        var browser = Request.Browser;
+        if (browser.Browser == "IE" && browser.MajorVersion == 8)
+        {
+            Html.AppendCssFileParts(string.Format("~/Themes/{0}/Content/css/ie8.css", themeName));
+        }
+
+
+        //add jQuery UI css file
+        Html.AppendCssFileParts("~/Content/jquery-ui-themes/smoothness/jquery-ui-1.10.3.custom.min.css");
+
+        if (browser.Browser == "IE" && browser.MajorVersion == 8)
+        {
+            Html.AddScriptParts("~/Scripts/selectivizr.min.js");
+            Html.AddScriptParts("~/Scripts/respond.min.js");
+        }
+
+        Html.AppendScriptParts("~/Themes/NopElectro-Premium/Content/js/public.ajaxcart.js");
+        Html.AppendScriptParts("~/Themes/NopElectro-Premium/Content/js/public.common.js");
+        Html.AppendScriptParts("~/Scripts/jquery-migrate-1.2.1.min.js");
+        Html.AppendScriptParts("~/Scripts/jquery-ui-1.10.3.custom.min.js");
+        Html.AppendScriptParts("~/Scripts/jquery.validate.unobtrusive.min.js");
+        Html.AppendScriptParts("~/Scripts/jquery.validate.min.js");
+        Html.AppendScriptParts("~/Scripts/jquery-1.10.2.min.js");
+        Html.AddScriptParts(string.Format("~/Themes/{0}/Content/js/bootstrap.min.js", themeName));
+        Html.AddScriptParts(string.Format("~/Themes/{0}/Content/js/owl.carousel.min.js", themeName));
+        Html.AddScriptParts(string.Format("~/Themes/{0}/Content/js/jquery.bpopup.min.js", themeName));
+        Html.AddScriptParts(string.Format("~/Themes/{0}/Content/js/select2/select2.min.js", themeName));
+        Html.AddScriptParts(string.Format("~/Themes/{0}/Content/js/jquery.dotdotdot.min.js", themeName));
+        Html.AddScriptParts(string.Format("~/Themes/{0}/Content/js/sweetalert/sweetalert2.min.js", themeName));
+        if (supportRtl)
+        {
+            Html.AddScriptParts(string.Format("~/Themes/{0}/Content/js/carousel.rtl.js", themeName));
+        }
+        else
+        {
+            Html.AddScriptParts(string.Format("~/Themes/{0}/Content/js/carousel.js", themeName));
+        }
+    }
+}

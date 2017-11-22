@@ -24,7 +24,7 @@ namespace Nop.Admin.Models.Catalog
             ProductWarehouseInventoryModels = new List<ProductWarehouseInventoryModel>();
             ProductEditorSettingsModel = new ProductEditorSettingsModel();
             StockQuantityHistory = new StockQuantityHistoryModel();
-
+            Conditions = new List<SelectListItem>();
             AvailableBasepriceUnits = new List<SelectListItem>();
             AvailableBasepriceBaseUnits = new List<SelectListItem>();
             AvailableProductTemplates = new List<SelectListItem>();
@@ -65,6 +65,11 @@ namespace Nop.Admin.Models.Catalog
         [NopResourceDisplayName("Admin.Catalog.Products.Fields.ProductType")]
         public string ProductTypeName { get; set; }
 
+        [NopResourceDisplayName("Admin.Catalog.Products.Fields.Condition")]
+        public int ConditionId { get; set; }
+
+        [NopResourceDisplayName("Admin.Catalog.Products.Fields.Condition")]
+        public string Condition { get; set;  }
 
         [NopResourceDisplayName("Admin.Catalog.Products.Fields.AssociatedToProductName")]
         public int AssociatedToProductId { get; set; }
@@ -386,7 +391,7 @@ namespace Nop.Admin.Models.Catalog
 
         public IList<ProductLocalizedModel> Locales { get; set; }
 
-
+        public IList<SelectListItem> Conditions { get; set; }
 
         //ACL (customer roles)
         [NopResourceDisplayName("Admin.Catalog.Products.Fields.AclCustomerRoles")]

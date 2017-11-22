@@ -1,10 +1,20 @@
 ﻿@{ 
+    
     Layout = "_AdminLayout.cshtml";
 }
 @*@{ 
     Html.AddScriptParts(Url.Content("~/Plugins/Extensions.Vehicle/Scripts/bootstrap.js"));
     Html.AppendCssFileParts(Url.Content("~/Plugins/Extensions.Vehicle/Styles/boots.css"));
 }*@
+@{
+    var defaultGridPageSize = "10";
+    var gridPageSizes = "10,25,50,200";
+
+    //page title
+    //ViewBag.Title = T("Admin.Catalog.Products").Text;
+    //active menu item (system name)
+    //Html.SetActiveMenuItemSystemName("Products");
+}
 <div class="content-header clearfix">
     <h1 class="pull-left">
         Vehicle Fitment Management
@@ -28,12 +38,12 @@
                     <h4>Products</h4>
                     <div class="input-group">
                        
-                        <input type="text" class="form-control" placeholder="Enter Sku" />
+                        <input id="product" type="text" class="form-control" placeholder="Enter Sku" />
                         <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">Load</button>
+                            <button id="fsearch" class="btn btn-default" type="button">Load</button>
                         </span>
                     </div>
-                    <div id="Fitments"></div>
+                    <div id="fitments-grid"></div>
                     <!--End Tabs-->
                 </div>
             </div>
@@ -42,6 +52,163 @@
 </div>
 <script>
     $(document).ready(function () {
+
+        $("#fitments-grid").kendoGrid({
+            dataSource: {
+                type: "json",
+                transport: {
+                    read: {
+                        url: "@Html.Raw(Url.Action("FitmentList", "Fitment"))",
+                    type: "POST",
+                    dataType: "json",
+                    data: additionalData
+                }
+            },
+            schema: {
+                data: "Data",
+                total: "Total",
+                errors: "Errors"
+            },
+            error: function(e) {
+                display_kendoui_grid_error(e);
+                // Cancel the changes
+                this.cancelChanges();
+            },
+            pageSize: @(defaultGridPageSize),
+            serverPaging: true,
+            serverFiltering: true,
+            serverSorting: true
+        },
+            pageable: {
+            refresh: true,
+            pageSizes: [@(gridPageSizes)],
+            @Html.Partial("_GridPagerMessages")
+            },
+        editable: {
+            confirmation: "@T("Admin.Common.DeleteConfirmation")",
+            mode: "inline"
+        },
+        scrollable: false,
+        dataBound: onDataBound,
+        columns: [
+            {
+                field: "Id",
+                headerTemplate: "<input id='mastercheckbox' type='checkbox'/>",
+                headerAttributes: { style: "text-align:center" },
+                attributes: { style: "text-align:center" },
+                template: "<input type='checkbox' value='#=Id#' class='checkboxGroups'/>",
+                width: 50
+            },
+           {
+               field: "Sku",
+               title: "SKU",
+               width: 300
+    }, {
+        field: "MakeName",
+        title: "Make",
+        width: 100
+    }, {
+    field: "ModelName",
+        title: "Model",
+    width: 150
+    //if not a grouped product, then display
+    //template: "# if(ProductTypeId !=  {# #:Price# #}  #"
+    }, {
+        field: "Year",
+        title: "Year",
+        width: 100
+    }, {
+    field: "Trim",
+        title: "Trim",
+    width: 100
+    }, {
+        field: "Engine",
+        title: "Engine",
+        width: 100
+        //template: '# if(Published) {# <i class="fa fa-check true-icon"></i> #} else {# <i class="fa fa-close false-icon"></i> #} #'
+    }, {
+    field: "Id",
+        title: "@T("Admin.Common.Edit")",
+    width: 100,
+    headerAttributes: { style: "text-align:center" },
+    attributes: { style: "text-align:center" },
+    template: '<a class="btn btn-default" href="Edit/#=Id#"><i class="fa fa-pencil"></i>@T("Admin.Common.Edit")</a>'
+    }
+    ]
+        });
+
+
+        $('#fsearch').click(function () {
+            //search
+            var grid = $('#fitments-grid').data('kendoGrid');
+            grid.dataSource.page(1); //new search. Set page size to 1
+            //grid.dataSource.read(); we already loaded the grid above using "page" function
+            //clear selected checkboxes
+            $('.checkboxGroups').attr('checked', false).change();
+            selectedIds = [];
+            return false;
+        });
+
+
+        $('#mastercheckbox').click(function () {
+            $('.checkboxGroups').attr('checked', $(this).is(':checked')).change();
+        });
+
+        //wire up checkboxes.
+        $('#fitments-grid').on('change', 'input[type=checkbox][id!=mastercheckbox][class=checkboxGroups]', function (e) {
+            var $check = $(this);
+            if ($check.is(":checked") == true) {
+                var checked = jQuery.inArray($check.val(), selectedIds);
+                if (checked == -1) {
+                    //add id to selectedIds.
+                    selectedIds.push($check.val());
+                }
+            }
+            else {
+                var checked = jQuery.inArray($check.val(), selectedIds);
+                if (checked > -1) {
+                    //remove id from selectedIds.
+                    selectedIds = $.grep(selectedIds, function (item, index) {
+                        return item != $check.val();
+                    });
+                }
+            }
+            updateMasterCheckbox();
+        });
+    });
+
+    function additionalData() {
+        var data = {
+            SearchProductName: $('#product').val(),
+            @*SearchCategoryId: $('#SearchCategoryId').val(),
+            SearchIncludeSubCategories: $('#@Html.FieldIdFor(model => model.SearchIncludeSubCategories)').is(':checked'),
+            SearchManufacturerId: $('#SearchManufacturerId').val(),
+            SearchStoreId: $('#SearchStoreId').val(),
+            SearchWarehouseId: $('#SearchWarehouseId').val(),
+            SearchVendorId: $('#SearchVendorId').val(),
+            SearchProductTypeId: $('#SearchProductTypeId').val(),
+            SearchPublishedId: $('#SearchPublishedId').val()*@
+        };
+        addAntiForgeryToken(data);
+        return data;
+    }
+
+    function onDataBound(e) {
+        $('#fitments-grid input[type=checkbox][id!=mastercheckbox][class=checkboxGroups]').each(function () {
+            var currentId = $(this).val();
+            var checked = jQuery.inArray(currentId, selectedIds);
+            //set checked based on if current checkbox's value is in selectedIds.
+            $(this).attr('checked', checked > -1);
+        });
+
+        updateMasterCheckbox();
+    }
+
+    function updateMasterCheckbox() {
+        var numChkBoxes = $('#fitments-grid input[type=checkbox][id!=mastercheckbox][class=checkboxGroups]').length;
+        var numChkBoxesChecked = $('#fitments-grid input[type=checkbox][id!=mastercheckbox][class=checkboxGroups]:checked').length;
+        $('#mastercheckbox').attr('checked', numChkBoxes == numChkBoxesChecked && numChkBoxes > 0);
+    }
 
 
                     // create ComboBox from input HTML element
@@ -75,5 +242,5 @@
 					//$("#get").click(function() {
 					//    alert('Thank you! Your Choice is:\n\nFabric ID: ' + fabric.value() + ' and Size: ' + select.value());
                     //});
-                });
+                //});
 </script>

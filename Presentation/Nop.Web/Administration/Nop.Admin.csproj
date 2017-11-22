@@ -156,6 +156,7 @@
     <Compile Include="Controllers\BaseAdminController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\AddressAttributeController.cs" />
+    <Compile Include="Controllers\FitmentController.cs" />
     <Compile Include="Controllers\PreferencesController.cs" />
     <Compile Include="Controllers\CustomerAttributeController.cs" />
     <Compile Include="Controllers\CheckoutAttributeController.cs" />
@@ -214,6 +215,7 @@
     <Compile Include="Infrastructure\Cache\ModelCacheEventConsumer.cs" />
     <Compile Include="Infrastructure\DependencyRegistrar.cs" />
     <Compile Include="Extensions\MappingExtensions.cs" />
+    <Compile Include="Infrastructure\RouteProvider.cs" />
     <Compile Include="Models\Affiliates\AffiliateListModel.cs" />
     <Compile Include="Models\Affiliates\AffiliatedOrderListModel.cs" />
     <Compile Include="Models\Blogs\BlogCommentListModel.cs" />
@@ -241,6 +243,9 @@
     <Compile Include="Models\Customers\CustomerAttributeModel.cs" />
     <Compile Include="Models\Customers\CustomerAttributeValueModel.cs" />
     <Compile Include="Models\Discounts\DiscountListModel.cs" />
+    <Compile Include="Models\Fitment\FitmentListModel.cs" />
+    <Compile Include="Models\Fitment\VFitmentModel.cs" />
+    <Compile Include="Models\Fitment\YearListModel.cs" />
     <Compile Include="Models\Home\NopCommerceNewsModel.cs" />
     <Compile Include="Models\Home\CommonStatisticsModel.cs" />
     <Compile Include="Models\Home\DashboardModel.cs" />
@@ -961,6 +966,8 @@
     <Content Include="Content\Roxy_Fileman\js\utils.js" />
     <Content Include="Content\Roxy_Fileman\LICENSE.txt" />
     <Content Include="Content\Roxy_Fileman\third-party.txt" />
+    <Content Include="Content\select2\select2.css" />
+    <Content Include="Content\select2\select2.min.css" />
     <Content Include="Content\styles.rtl.css" />
     <Content Include="Content\tagEditor\jquery.tag-editor.css" />
     <Content Include="Content\tinymce\license.txt" />
@@ -1085,6 +1092,7 @@
     <Content Include="Scripts\fineuploader\processing.gif" />
     <Content Include="Scripts\fineuploader\templates\default.html" />
     <Content Include="Scripts\fineuploader\templates\simple-thumbnails.html" />
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\jquery-migrate-1.2.1.js" />
@@ -1092,6 +1100,7 @@
     <Content Include="Scripts\jquery-ui-1.10.3.custom.js" />
     <Content Include="Scripts\jquery-ui-1.10.3.custom.min.js" />
     <Content Include="Scripts\jquery.tmpl.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -1517,6 +1526,10 @@
     <Content Include="Scripts\kendo\2014.1.318\kendo.view.min.js" />
     <Content Include="Scripts\kendo\2014.1.318\kendo.web.min.js" />
     <Content Include="Scripts\kendo\2014.1.318\kendo.window.min.js" />
+    <Content Include="Scripts\select2\select2.full.js" />
+    <Content Include="Scripts\select2\select2.full.min.js" />
+    <Content Include="Scripts\select2\select2.js" />
+    <Content Include="Scripts\select2\select2.min.js" />
     <Content Include="Scripts\tagEditor\jquery.caret.min.js" />
     <Content Include="Scripts\tagEditor\jquery.tag-editor.js" />
     <Content Include="Scripts\tagEditor\jquery.tag-editor.min.js" />
@@ -2496,6 +2509,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Roxy_Fileman\tmp\" />
+    <Folder Include="Scripts\select2\i18n\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shipping\EditProductAvailabilityRange.cshtml" />
@@ -2520,6 +2534,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\_GridPagerMessages.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Fitment\index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Fitment\_CreateFitment.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Fitment\Edit.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

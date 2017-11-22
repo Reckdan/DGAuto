@@ -16,3 +16,12 @@ C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\AutoPartsNew\Prese
 C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\AutoPartsNew\Plugins\Nop.Plugin.Extension.Vehicle\obj\Debug\Nop.Plugin.Extension.Vehicle.csprojResolveAssemblyReference.cache
 C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\AutoPartsNew\Plugins\Nop.Plugin.Extension.Vehicle\obj\Debug\Nop.Plugin.Extension.Vehicle.dll
 C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\AutoPartsNew\Plugins\Nop.Plugin.Extension.Vehicle\obj\Debug\Nop.Plugin.Extension.Vehicle.pdb
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\DGAuto\Plugins\Nop.Plugin.Extension.Vehicle\obj\Debug\Nop.Plugin.Extension.Vehicle.csprojResolveAssemblyReference.cache
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\DGAuto\Presentation\Nop.Web\Plugins\Extension.Vehicle\Description.txt
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\DGAuto\Presentation\Nop.Web\Plugins\Extension.Vehicle\web.config
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\DGAuto\Presentation\Nop.Web\Plugins\Extension.Vehicle\Views\Manage.cshtml
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\DGAuto\Presentation\Nop.Web\Plugins\Extension.Vehicle\Views\_headerbuttons.cshtml
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\DGAuto\Presentation\Nop.Web\Plugins\Extension.Vehicle\Nop.Plugin.Extension.Vehicle.dll
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\DGAuto\Presentation\Nop.Web\Plugins\Extension.Vehicle\Nop.Plugin.Extension.Vehicle.pdb
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\DGAuto\Plugins\Nop.Plugin.Extension.Vehicle\obj\Debug\Nop.Plugin.Extension.Vehicle.dll
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\DGAuto\Plugins\Nop.Plugin.Extension.Vehicle\obj\Debug\Nop.Plugin.Extension.Vehicle.pdb

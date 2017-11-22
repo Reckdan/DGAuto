@@ -460,6 +460,7 @@ namespace Nop.Web.Factories
             //featured products
             if (!_catalogSettings.IgnoreFeaturedProducts)
             {
+                
                 //We cache a value indicating whether we have featured products
                 IPagedList<Product> featuredProducts = null;
                 string cacheKey = string.Format(ModelCacheEventConsumer.CATEGORY_HAS_FEATURED_PRODUCTS_KEY, category.Id,
@@ -473,7 +474,10 @@ namespace Nop.Web.Factories
                        categoryIds: new List<int> { category.Id },
                        storeId: _storeContext.CurrentStore.Id,
                        visibleIndividuallyOnly: true,
-                       featuredProducts: true);
+                       featuredProducts: true,
+                       vehicleId: command.VehicleID,
+                       basevehicleId: command.BaseVehicleID,
+                       engineId:command.EngineID);
                     hasFeaturedProductsCache = featuredProducts.TotalCount > 0;
                     _cacheManager.Set(cacheKey, hasFeaturedProductsCache, 60);
                 }
@@ -485,7 +489,10 @@ namespace Nop.Web.Factories
                        categoryIds: new List<int> { category.Id },
                        storeId: _storeContext.CurrentStore.Id,
                        visibleIndividuallyOnly: true,
-                       featuredProducts: true);
+                       featuredProducts: true,
+                       vehicleId: command.VehicleID,
+                       basevehicleId: command.BaseVehicleID,
+                       engineId: command.EngineID);
                 }
                 if (featuredProducts != null)
                 {
@@ -514,8 +521,12 @@ namespace Nop.Web.Factories
                 priceMax:maxPriceConverted,
                 filteredSpecs: alreadyFilteredSpecOptionIds,
                 orderBy: (ProductSortingEnum)command.OrderBy,
-                pageIndex: command.PageNumber - 1,
-                pageSize: command.PageSize);
+                vehicleId: command.VehicleID,
+                 pageIndex: command.PageNumber - 1,
+                 basevicleID:command.BaseVehicleID,
+                 engineId:command.EngineID,
+                pageSize: command.PageSize
+                );
             model.Products = _productModelFactory.PrepareProductOverviewModels(products).ToList();
 
             model.PagingFilteringContext.LoadPagedList(products);

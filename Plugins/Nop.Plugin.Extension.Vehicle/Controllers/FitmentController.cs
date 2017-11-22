@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net;
 using System.Web.Mvc;
+using Nop.Web.Framework.Kendoui;
 
 namespace Nop.Plugin.Extension.Vehicle.Controllers
 {
@@ -30,6 +31,25 @@ namespace Nop.Plugin.Extension.Vehicle.Controllers
             _vehicleService = vehicleService;
             _workContext = workContext;
             _productService = productService;
+        }
+
+        public ActionResult FitmentList(DataSourceRequest command, Fitment model)
+        {
+            //var product = _productService.GetProductBySku(model.Sku);
+            var vendorid = (_workContext.CurrentVendor == null) ? 0 : _workContext.CurrentVendor.Id;
+            var fitmentList = _vehicleService.SearchFitments(Sku: model.Sku,vendorId: vendorid);
+            var gridModel = new DataSourceResult
+            {
+                Data = fitmentList.Select(x =>
+                {
+                    
+                    return fitmentList;
+                }),
+                Total = fitmentList.TotalCount,
+            };
+
+            return Json(gridModel);
+
         }
 
         public ActionResult GetFitment(int? productID)

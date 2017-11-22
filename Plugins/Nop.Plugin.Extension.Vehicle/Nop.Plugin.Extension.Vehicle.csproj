@@ -52,7 +52,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="Nop.Data">
-      <HintPath>..\..\Libraries\Nop.Data\bin\Debug\Nop.Data.dll</HintPath>
+      <HintPath>..\..\Libraries\Nop.Data\obj\Debug\Nop.Data.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Nop.Services">
@@ -100,6 +100,7 @@
     <Compile Include="Domain\VehicleTypeGroup.cs" />
     <Compile Include="Infrastructure\DependencyRegistrar.cs" />
     <Compile Include="Infrastructure\CustomViewEngine.cs" />
+    <Compile Include="Model\FitmentListModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RouteConfig.cs" />
     <Compile Include="Services\VehicleRecordService.cs" />

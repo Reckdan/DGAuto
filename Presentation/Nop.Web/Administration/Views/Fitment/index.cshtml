@@ -1,0 +1,654 @@
+﻿
+@model Nop.Admin.Models.Fitment.VFitmentModel
+
+
+@{
+    var defaultGridPageSize = EngineContext.Current.Resolve<Nop.Core.Domain.Common.AdminAreaSettings>().DefaultGridPageSize;
+    var gridPageSizes = EngineContext.Current.Resolve<Nop.Core.Domain.Common.AdminAreaSettings>().GridPageSizes;
+
+    //page title
+    ViewBag.Title = "Fitment"; //T("Admin.Catalog.Products").Text;
+    //active menu item (system name)
+    Html.SetActiveMenuItemSystemName("Fitment");
+}
+@*@{
+
+    Layout = "_AdminLayout.cshtml";
+}*@
+@*@{
+        Html.AddScriptParts(Url.Content("~/Plugins/Extensions.Vehicle/Scripts/bootstrap.js"));
+        Html.AppendCssFileParts(Url.Content("~/Plugins/Extensions.Vehicle/Styles/boots.css"));
+    }*@
+@{
+//var defaultGridPageSize = "10";
+//var gridPageSizes = "10,25,50,200";
+
+//page title
+//ViewBag.Title = T("Admin.Catalog.Products").Text;
+//active menu item (system name)
+//Html.SetActiveMenuItemSystemName("Products");
+}
+<div class="content-header clearfix">
+    <h1 class="pull-left">
+        Vehicle Fitment Management
+    </h1>
+    <div class="pull-right">
+        <button type="button" class="btn btn-block btn-primary">Vehicle Fitment</button>
+
+    </div>
+
+</div>
+<div class="page-content container-fluid">
+    <!-- Panel Tabs -->
+    <div class="panel">
+        <div class="panel-heading">
+           
+        </div>
+        <div class="panel-body container-fluid">
+            <div class="col-lg-12">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        
+
+                            <!-- Example Tabs -->
+                            <h4>Products</h4>
+                            <div class="input-group">
+
+                                <input id="product" type="text" class="form-control" placeholder="Enter Sku" />
+                                <span class="input-group-btn">
+                                    <button id="fsearch" class="btn btn-default" type="button">Find</button>
+                                </span>
+                            </div>
+
+                            <!--End Tabs-->
+                        
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" name="addfitment" class="btn bg-blue" id="add-fitment">
+                            <i class="fa fa-plus-square"></i>
+                            Add New Fitment
+                        </button>
+                    </div>
+                </div>
+            </div>
+            @**@
+                <div class="row row-lg">
+                    <div id="add-fitment-form" class="col-lg-12">
+                    
+                    
+                    
+                    @Html.Action("CreateFitment", "Fitment")
+                    
+                    </div>
+                </div>
+
+                <hr />
+            
+                <div id="fitments-grid"></div>
+            </div>
+    </div>
+</div>
+<script>
+    var selectedIds = [];
+    var dataobjects=[];
+    $(document).ready(function () {
+        $("#add-fitment-form").hide();
+        $("#EndYear").hide();
+        $("#Year").attr('placeholder','Year');
+        $("#info").hide();
+        @*$("#product").kendoAutoComplete({
+            dataTextField: "Sku",
+            filter: "contains",
+            minLength: 2,
+            dataSource: {
+                type: "json",
+                serverFiltering: true,
+                transport: {
+                    read: "@Url.Action("ListProducts", "Fitment")"
+                }
+            }
+        });*@
+
+
+        //Year Range checked
+        $('#yearrange').change(function(){
+            if($(this).is(":checked")){
+                $("#EndYear").show();
+                $("#Year").attr('placeholder','From');
+            }else{
+                $("#EndYear").hide();
+                $("#Year").attr('placeholder','Year');
+            }
+        });
+        function FitmentData(){
+            var postData = {
+                Year: $("#Year").val(),
+                EndYear:$("#EndYear").val(),
+                Sku:$("#product").val(),
+                MakeID:$("#Make").val(),
+                ModelID:$("#Model").val(),
+                VehicleID:$("#Trim").val(),
+                EngineID:$("#Egine").val()
+            };
+            addAntiForgeryToken(postData);
+            //addAntiForgeryToken(data);
+            return postData;
+        }
+
+        function listMake(){
+            var mYear={
+                year: $("#Year").val(),
+                EndYear: $("#EndYear").val()
+            };
+            //addAntiForgeryToken(mYear);
+
+            //alert(mYear.year);
+            if(!$('#yearrange').is(":checked")){
+                mYear.EndYear=0;
+            }
+
+            $('#Make').attr("disabled",false);
+            $.ajax({
+                url: "@Url.Action("ListMake", "Fitment")",
+                type: "POST",
+            dataType: "json",
+            data: mYear,
+            success: function (makes) {
+                //alert('1');
+                $("#Make").html(""); // clear before appending new list
+                //alert('2');
+                dataobjects=$.map(makes,function(el) {return el});
+                //alert(dataobjects.length);
+                $("#Make").select2({data:dataobjects,
+                    placeholder:"Select Make...."
+
+                });
+
+            }
+        });
+        }
+        $("#Year").change(function(){
+            listMake();
+            $("#Trim").html("");
+            $("#Model").html("");
+            $("#Engine").html("");
+        });
+
+        $("#EndYear").change(function(){
+            listMake();
+            $("#Trim").html("");
+            $("#Model").html("");
+            $("#Engine").html("");
+        });
+
+      $("#Make").change(function(){
+          listModel();
+          $("#Trim").html("");
+          $("#Engine").html("");
+        });
+
+        function listModel(){
+            var mYear={
+                year: $("#Year").val(),
+                EndYear: $("#EndYear").val(),
+                MakeID: $("#Make").val()
+
+            };
+            //addAntiForgeryToken(mYear);
+
+            //alert(mYear.year);
+            if(!$('#yearrange').is(":checked")){
+
+                mYear.EndYear=0;
+            }
+
+            $('#Model').attr("disabled",false);
+
+            $.ajax({
+                url: "@Url.Action("ListModel", "Fitment")",
+                type: "POST",
+            dataType: "json",
+            data: mYear,
+            success: function (models) {
+                //alert('1');
+                $("#Model").html(""); // clear before appending new list
+                //alert('2');
+                dataobjects=$.map(models,function(el) {return el});
+                //alert(dataobjects.length);
+                $("#Model").select2({data:dataobjects,
+                    placeholder:"Select Model...."});
+
+            }
+        });
+        }
+
+        function listTrim(){
+            var mYear={
+                year: $("#Year").val(),
+                EndYear: $('#EndYear').val(),
+                MakeID: $("#Make").val(),
+                ModelID: $('#Model').val()
+
+            };
+            //addAntiForgeryToken(mYear);
+
+            //alert(mYear.year);
+            //if(!$('#yearrange').is(":checked")){
+            if(!$('#yearrange').is(":checked")){
+                mYear.EndYear=0;
+            }
+
+
+            $('#Trim').attr("disabled",false);
+            // alert(mYear.ModelID);
+            $.ajax({
+                url: "@Url.Action("ListTrim", "Fitment")",
+                type: "POST",
+            dataType: "json",
+            data: mYear,
+            success: function (models) {
+                //alert('1');
+                $("#Trim").html(""); // clear before appending new list
+                //alert('2');
+                dataobjects=$.map(models,function(el) {return el});
+                //alert(dataobjects.length);
+                $("#Trim").select2({data:dataobjects,
+                    placeholder:"Select Trinm...."});
+
+            }
+        });
+        }
+        $("#Model").change(function(){
+            listTrim();
+            $("#Engine").html("");
+
+        });
+
+        function listEngine(){
+            var mYear={
+
+                VehicelID: $('#Trim').val()
+
+            };
+            //addAntiForgeryToken(mYear);
+
+            //alert(mYear.year);
+            //if(!$('#yearrange').is(":checked")){
+
+
+
+            $('#Engine').attr("disabled",false);
+            //alert(mYear.VehicleID);
+            $.ajax({
+                url: "@Url.Action("ListEngine", "Fitment")",
+                type: "POST",
+            dataType: "json",
+            data: mYear,
+            success: function (models) {
+                //alert('1');
+                $("#Engine").html(""); // clear before appending new list
+                //alert('2');
+                dataobjects=$.map(models,function(el) {return el});
+                //alert(dataobjects.length);
+                $("#Engine").select2({data:dataobjects,
+                    placeholder:"Select Engine...."});
+
+            }
+        });
+        }
+
+        $("#Trim").change(function(){
+
+            listEngine();
+
+        });
+
+
+        function getData(){
+            $.ajax({
+                url: "@Url.Action("CreateFitment", "Fitment")",
+                type: "POST",
+                dataType: "JSON",
+                data: { Year: year},
+                success: function (makes) {
+                    $("#City").html(""); // clear before appending new list
+                    $.each(cities, function (i, city) {
+                        $("#City").append(
+                            $('<option></option>').val(city.CityId).html(city.CityName));
+                    });
+                }
+            });
+
+        }
+        //Save Fitment
+        $("#SaveFitment").click(function(e){
+            e.preventDefault();
+
+            var postData = {
+                Year: $("#Year").val(),
+                EndYear:$("#EndYear").val(),
+                Sku:$("#product").val(),
+                MakeID:$("#Make").val(),
+                ModelID:$("#Model").val(),
+                VehicleID:$("#Trim").val(),
+                EngineID:$("#Egine").val()
+            };
+
+            if(postData.Sku==""){
+                alert("Please enter Sku for the product you want to create fitment for");
+                return;
+            }
+
+            if(postData.Year=="0"){
+                alert("Please Select Vehicle Year");
+                return;
+            }
+           // alert(postData.MakeID);
+           // return;
+
+                if(postData.MakeID==0){
+                    alert("Please Select Make");
+                    return;
+                }
+
+            addAntiForgeryToken(postData);
+            //alert('ajax call');
+             $.ajax({
+                 type: "POST",
+                 url: "@Url.Action("SaveFitment", "Fitment")",
+                 data: postData,
+                 dataType: "json",
+                complete: function(data) {
+                    //reload grid
+                    var grid = $('#fitments-grid').data('kendoGrid');
+                    grid.dataSource.read();
+                    $("#product").val("");
+                    $("#Year").val("0");
+                    $("#EndYear").val("0");
+                    $("#Make").html("");
+                    $("#Trim").html("");
+                    $("#Model").html("");
+                    $("#Engine").html("");
+                    alert("Fiment added successfully")
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    alert(thrownError);
+                },
+                traditional: true
+        });
+
+
+        });
+
+        //Cancel Fitment
+        $("#cancelFitment").click(function(e){
+            e.preventDefault();
+            $("#add-fitment-form").hide();
+        });
+
+        $("#cancelFitment").click(function(e){
+            e.preventDefault();
+            $("#add-fitment-form").hide();
+
+            $("#add-fitment").show();
+
+        });
+
+        //Add Fitment
+        $('#add-fitment').click(function(e) {
+            e.preventDefault();
+
+            $("#add-fitment-form").show();
+
+            $("#add-fitment").hide();
+           @*$("#add-fitment-form").load("@Html.Raw(Url.Action("CreateFitment", "Fitment"))");*@
+            @*$.ajax({
+                type: "GET",
+                url: "@Url.Action("CreateFitment", "Fitment")",
+                contentType: "application/json; charset=utf-8",
+                dataType: "html",
+                success: function (response) {
+                    $('#add-fitment-form').html(response);
+                    $("#endyear").hide();
+                    $("#startyear").attr('placeholder','Year');
+
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });*@
+        }
+        );
+
+        $("#fitments-grid").kendoGrid({
+            dataSource: {
+                type: "json",
+                transport: {
+                    read: {
+                        url: "@Html.Raw(Url.Action("FitmentList", "Fitment"))",
+                    type: "POST",
+                    dataType: "json",
+                    data: additionalData
+                }
+                },
+            toolbar: ["Delete Selected"],
+            schema: {
+                data: "Data",
+                total: "Total",
+                errors: "Errors"
+            },
+            error: function(e) {
+                display_kendoui_grid_error(e);
+                // Cancel the changes
+                this.cancelChanges();
+            },
+            pageSize: @(defaultGridPageSize),
+            serverPaging: true,
+            serverFiltering: true,
+            serverSorting: true
+        },
+            pageable: {
+            refresh: true,
+            pageSizes: [@(gridPageSizes)],
+            @Html.Partial("_GridPagerMessages")
+            },
+        editable: {
+            confirmation: "@T("Admin.Common.DeleteConfirmation")",
+            mode: "inline"
+        },
+        scrollable: false,
+        dataBound: onDataBound,
+        columns: [
+            {
+                field: "Id",
+                headerTemplate: "<input id='mastercheckbox' type='checkbox'/>",
+                headerAttributes: { style: "text-align:center" },
+                attributes: { style: "text-align:center" },
+                template: "<input type='checkbox' value='#=Id#' class='checkboxGroups'/>",
+                width: 50
+            },
+           {
+               field: "Sku",
+               title: "SKU",
+               width: 300
+    }, {
+        field: "MakeName",
+        title: "Make",
+        width: 100
+    }, {
+    field: "ModelName",
+        title: "Model",
+    width: 150
+    //if not a grouped product, then display
+    //template: "# if(ProductTypeId !=  {# #:Price# #}  #"
+    }, {
+        field: "Year",
+        title: "Year",
+        width: 100
+    }, {
+    field: "Trim",
+        title: "Trim",
+    width: 100
+    },
+    //{
+    //    field: "Engine",
+    //    title: "Engine",
+    //    width: 100
+    //    //template: '# if(Published) {# <i class="fa fa-check true-icon"></i> #} else {# <i class="fa fa-close false-icon"></i> #} #'
+    //},
+    {
+    field: "Id",
+        title: "@T("Admin.Common.Edit")",
+    width: 100,
+    headerAttributes: { style: "text-align:center" },
+    attributes: { style: "text-align:center" },
+    template: '<a class="btn btn-default" href="Fitment/Edit/#=Id#"><i class="fa fa-pencil"></i>@T("Admin.Common.Edit")</a>'
+    }
+    ]
+        });
+
+        -
+        $('#fsearch').click(function () {
+            //search
+            var grid = $('#fitments-grid').data('kendoGrid');
+            grid.dataSource.page(1); //new search. Set page size to 1
+            //grid.dataSource.read(); we already loaded the grid above using "page" function
+            //clear selected checkboxes
+            $('.checkboxGroups').attr('checked', false).change();
+            selectedIds = [];
+            return false;
+        });
+
+
+        $('#mastercheckbox').click(function () {
+            $('.checkboxGroups').attr('checked', $(this).is(':checked')).change();
+        });
+
+        //wire up checkboxes.
+        $('#fitments-grid').on('change', 'input[type=checkbox][id!=mastercheckbox][class=checkboxGroups]', function (e) {
+            var $check = $(this);
+            if ($check.is(":checked") == true) {
+                var checked = jQuery.inArray($check.val(), selectedIds);
+                if (checked == -1) {
+                    //add id to selectedIds.
+                    selectedIds.push($check.val());
+                }
+            }
+            else {
+                var checked = jQuery.inArray($check.val(), selectedIds);
+                if (checked > -1) {
+                    //remove id from selectedIds.
+                    selectedIds = $.grep(selectedIds, function (item, index) {
+                        return item != $check.val();
+                    });
+                }
+            }
+            updateMasterCheckbox();
+        });
+    });
+
+
+
+    function additionalData() {
+        var data = {
+            SearchProductName: $('#product').val(),
+            @*SearchCategoryId: $('#SearchCategoryId').val(),
+            SearchIncludeSubCategories: $('#@Html.FieldIdFor(model => model.SearchIncludeSubCategories)').is(':checked'),
+            SearchManufacturerId: $('#SearchManufacturerId').val(),
+            SearchStoreId: $('#SearchStoreId').val(),
+            SearchWarehouseId: $('#SearchWarehouseId').val(),
+            SearchVendorId: $('#SearchVendorId').val(),
+            SearchProductTypeId: $('#SearchProductTypeId').val(),
+            SearchPublishedId: $('#SearchPublishedId').val()*@
+        };
+        addAntiForgeryToken(data);
+        return data;
+    }
+
+    function onDataBound(e) {
+
+        $('#fitments-grid input[type=checkbox][id!=mastercheckbox][class=checkboxGroups]').each(function () {
+
+            var currentId = $(this).val();
+            //alert("test");
+            var checked = jQuery.inArray(currentId, selectedIds);
+
+            //set checked based on if current checkbox's value is in selectedIds.
+            $(this).attr('checked', checked > -1);
+        });
+
+        updateMasterCheckbox();
+    }
+
+    function updateMasterCheckbox() {
+        var numChkBoxes = $('#fitments-grid input[type=checkbox][id!=mastercheckbox][class=checkboxGroups]').length;
+        var numChkBoxesChecked = $('#fitments-grid input[type=checkbox][id!=mastercheckbox][class=checkboxGroups]:checked').length;
+        //alert(numChkBoxes+" "+numChkBoxesChecked);
+        $('#mastercheckbox').attr('checked', numChkBoxes == numChkBoxesChecked && numChkBoxes > 0);
+    }
+
+
+    //Delete Selected
+    $('#delete-selected').click(function(e) {
+        e.preventDefault();
+
+        var postData = {
+            selectedIds: selectedIds
+        };
+        addAntiForgeryToken(postData);
+
+        $.ajax({
+            cache: false,
+            type: "POST",
+            url: "@(Url.Action("DeleteSelected", "Product"))",
+            data: postData,
+        complete: function(data) {
+            //reload grid
+            var grid = $('#products-grid').data('kendoGrid');
+            grid.dataSource.read();
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError);
+        },
+        traditional: true
+    });
+    return false;
+    });
+
+                    // create ComboBox from input HTML element
+                    @*$("#fabric").kendoComboBox({
+                        placeholder: "Select Product....",
+                        dataTextField: "Name",
+                        dataValueField: "Id",
+                        filter: "contains",
+                        autoBind: false,
+                        minLength: 3,
+                        dataSource: {
+                            type: "odata",
+                            serverFiltering: true,
+                            transport: {
+                                read: {
+                                    url: "@Html.Raw(Url.Action("ListProducts", "Vehicle"))",
+                                data: "1"
+                            }
+                        }
+                    }
+
+                    });*@
+
+                    // create ComboBox from select HTML element
+                    //$("#size").kendoComboBox();
+
+                    //var fabric = $("#fabric").data("kendoComboBox");
+					//var select = $("#size").data("kendoComboBox");
+
+
+					//$("#get").click(function() {
+					//    alert('Thank you! Your Choice is:\n\nFabric ID: ' + fabric.value() + ' and Size: ' + select.value());
+                    //});
+                //});
+</script>

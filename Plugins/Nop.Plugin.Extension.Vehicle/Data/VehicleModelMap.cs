@@ -15,7 +15,7 @@ namespace Nop.Plugin.Extension.Vehicle.Data
 
             ToTable("VehicleModel");
             HasKey(m => m.Id);
-            Property(m => m.MakeID);
+          //  Property(m => m.MakeID);
             Property(m => m.ModelName).HasMaxLength(125);
           //  Property(m => m.VehicleTypeID);
             Property(m => m.VehicleTypeGroupID);

@@ -28,7 +28,7 @@ namespace Nop.Data.Mapping.Catalog
             this.Property(p => p.AllowedQuantities).HasMaxLength(1000);
             this.Property(p => p.BasepriceAmount).HasPrecision(18, 4);
             this.Property(p => p.BasepriceBaseAmount).HasPrecision(18, 4);
-
+            this.Property(p => p.ConditionId);
             this.Ignore(p => p.ProductType);
             this.Ignore(p => p.BackorderMode);
             this.Ignore(p => p.DownloadActivationType);

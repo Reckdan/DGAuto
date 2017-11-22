@@ -253,6 +253,8 @@
     <Compile Include="ExportImport\ExportProductAttribute.cs" />
     <Compile Include="ExportImport\Help\PropertyByName.cs" />
     <Compile Include="ExportImport\Help\PropertyManager.cs" />
+    <Compile Include="Fitment\FitmentService.cs" />
+    <Compile Include="Fitment\IFitmentService.cs" />
     <Compile Include="Helpers\BrowscapXmlParser.cs" />
     <Compile Include="Infrastructure\AzureWebAppsMachineNameProvider.cs" />
     <Compile Include="Infrastructure\DefaultMachineNameProvider.cs" />

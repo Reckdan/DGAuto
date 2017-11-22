@@ -19,6 +19,7 @@ using Nop.Services.Localization;
 using Nop.Services.Messages;
 using Nop.Services.Security;
 using Nop.Services.Stores;
+using Nop.Core.Domain.Fitment;
 
 namespace Nop.Services.Catalog
 {
@@ -70,6 +71,7 @@ namespace Nop.Services.Catalog
         private readonly IEventPublisher _eventPublisher;
         private readonly IAclService _aclService;
         private readonly IStoreMappingService _storeMappingService;
+        private readonly IRepository<VFitment> _fitmentRepository;
 
         #endregion
 
@@ -131,7 +133,8 @@ namespace Nop.Services.Catalog
             CatalogSettings catalogSettings,
             IEventPublisher eventPublisher,
             IAclService aclService,
-            IStoreMappingService storeMappingService)
+            IStoreMappingService storeMappingService,
+            IRepository<VFitment> fitment)
         {
             this._cacheManager = cacheManager;
             this._productRepository = productRepository;
@@ -160,6 +163,7 @@ namespace Nop.Services.Catalog
             this._eventPublisher = eventPublisher;
             this._aclService = aclService;
             this._storeMappingService = storeMappingService;
+            this._fitmentRepository = fitment;
         }
 
         #endregion
@@ -427,7 +431,13 @@ namespace Nop.Services.Catalog
             IList<int> filteredSpecs = null,
             ProductSortingEnum orderBy = ProductSortingEnum.Position,
             bool showHidden = false,
-            bool? overridePublished = null)
+            bool? overridePublished = null,
+             int basevehicleId = 0,
+            int vehicleId=0,
+            int engineId=0,
+            int conditionId=0
+
+            )
         {
             IList<int> filterableSpecificationAttributeOptionIds;
             return SearchProducts(out filterableSpecificationAttributeOptionIds, false,
@@ -436,7 +446,7 @@ namespace Nop.Services.Catalog
                 productType, visibleIndividuallyOnly, markedAsNewOnly, featuredProducts,
                 priceMin, priceMax, productTagId, keywords, searchDescriptions, searchManufacturerPartNumber, searchSku,
                 searchProductTags, languageId, filteredSpecs, 
-                orderBy, showHidden, overridePublished);
+                orderBy, showHidden, overridePublished,basevehicleId,vehicleId,engineId,conditionId );
         }
 
         /// <summary>
@@ -499,7 +509,11 @@ namespace Nop.Services.Catalog
             IList<int> filteredSpecs = null,
             ProductSortingEnum orderBy = ProductSortingEnum.Position,
             bool showHidden = false,
-            bool? overridePublished = null)
+            bool? overridePublished = null,
+            int basevehicleId = 0,
+            int vehicleId = 0,
+            int engineId = 0,
+            int conditionId=0)
         {
             filterableSpecificationAttributeOptionIds = new List<int>();
 
@@ -578,6 +592,34 @@ namespace Nop.Services.Catalog
                 pWarehouseId.ParameterName = "WarehouseId";
                 pWarehouseId.Value = warehouseId;
                 pWarehouseId.DbType = DbType.Int32;
+
+
+                //================Fitment Information==================================================================
+
+                var pBaseVehicleID = _dataProvider.GetParameter();
+                pBaseVehicleID.ParameterName = "BaseVehicleID";
+                pBaseVehicleID.Value = basevehicleId;
+                pBaseVehicleID.DbType = DbType.Int32;
+
+                var pVehicleID = _dataProvider.GetParameter();
+                pVehicleID.ParameterName = "VehicleID";
+                pVehicleID.Value = vehicleId;
+                pVehicleID.DbType = DbType.Int32;
+
+                var pEngineID = _dataProvider.GetParameter();
+                pEngineID.ParameterName = "EngineID";
+                pEngineID.Value = engineId;
+                pEngineID.DbType = DbType.Int32;
+
+                //================End Fitment Information ==================================================================
+                //================Vehicle Condition========================================================================
+                var pConditionId = _dataProvider.GetParameter();
+                pConditionId.ParameterName = "ConditionID";
+                pConditionId.Value = engineId;
+                pConditionId.DbType = DbType.Int32;
+
+
+                //==================End Condition =============================================================================
 
                 var pProductTypeId = _dataProvider.GetParameter();
                 pProductTypeId.ParameterName = "ProductTypeId";
@@ -712,6 +754,10 @@ namespace Nop.Services.Catalog
                     pManufacturerId,
                     pStoreId,
                     pVendorId,
+                    pBaseVehicleID, 
+                    pVehicleID, 
+                    pEngineID,
+                    pConditionId,
                     pWarehouseId,
                     pProductTypeId,
                     pVisibleIndividuallyOnly,
@@ -950,6 +996,29 @@ namespace Nop.Services.Catalog
                         ).Any());
                 }
 
+               //var  fiteredFitement=from f in _fitmentRepository
+
+                if (vehicleId == 0 && basevehicleId != 0)
+                    query = from p in query
+                            from f in p.VFitments.Where(f => f.ProductID == p.Id && f.Vehicle.BaseVehicleID==basevehicleId)
+                            select p;
+
+                if (vehicleId != 0)
+                {
+                    query = from p in query
+                            from f in p.VFitments.Where(f => f.ProductID == p.Id && f.VehicleRecordID == vehicleId)
+                            select p;
+                }
+                if (engineId != 0)
+                {
+                    query = from p in query
+                            from f in p.VFitments.Where(f => f.ProductID == p.Id && f.EngineID == engineId)
+                            select p;
+                }
+                if (conditionId != 0)
+                {
+                    query = query.Where(p => p.ConditionId == conditionId);
+                }
                 //only distinct products (group by ID)
                 //if we use standard Distinct() method, then all fields will be compared (low performance)
                 //it'll not work in SQL Server Compact when searching products by a keyword)

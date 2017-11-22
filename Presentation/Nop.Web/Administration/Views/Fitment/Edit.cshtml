@@ -1,0 +1,270 @@
+﻿@model Nop.Admin.Models.Fitment.VFitmentModel
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+
+
+<div class="page-content container-fluid">
+    <!-- Panel Tabs -->
+    <div class="panel">
+        <div class="panel-heading">
+
+        </div>
+        <div class="panel-body container-fluid">
+            <div class="col-lg-12">
+                <div class="form-horizontal">
+                   
+                </div>
+            </div>
+            @**@
+            <div class="row row-lg">
+                <div id="add-fitment-form" class="col-lg-12">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-horizontal">
+                            <h4>Edit Fitment For <strong>@Model.Sku</strong></h4>
+                            <hr />
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            @Html.HiddenFor(model => model.Id)
+                            @Html.HiddenFor(model => model.ProductID)
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Year, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.DropDownListFor(model=>model.Year, new SelectList(Model.YearList,"Value","Text") ,"Select Year", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Year, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.MakeID, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.DropDownListFor(model=>model.MakeID, Model.MakeList, "Select Make", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.MakeID, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.ModelID, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.DropDownListFor(model=>model.ModelID, Model.ModelList, "Select Model", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.ModelID, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Trim, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.DropDownListFor(model=>model.VehicleID, Model.TrimList, "Select Trim", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.VehicleID, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.EngineID, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.DropDownListFor(model=>model.EngineID, Model.EngineList, "Select Engine", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.EngineID, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input type="submit" value="Save" class="btn btn-default" />
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    <div>
+                        @Html.ActionLink("Back to List", "Index")
+                    </div>
+                </div>
+            </div>
+
+            <hr />
+
+            <div id="fitments-grid"></div>
+        </div>
+    </div>
+</div>
+@*<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>*@
+
+<script>
+    $("#Year").select2();
+    $("#MakeID").select2();
+    $("#ModelID").select2();
+    $("#VehicleID").select2();
+    $("#EngineID").select2();
+
+                        $(document).ready(function () {
+                            $("#MakeID").change(function () {
+                                listModel();
+
+                            });
+                            $("#Year").change(function () {
+                                listMake();
+
+                            });
+                            function listMake() {
+                                var mYear = {
+                                    year: $("#Year").val(),
+                                    EndYear: "0"
+                                };
+                                //addAntiForgeryToken(mYear);
+
+                                //alert(mYear.year);
+                                //if(!$('#yearrange').is(":checked")){
+                                //    mYear.EndYear=0;
+                                //}
+
+                                $('#MakeID').attr("disabled", false);
+                                $.ajax({
+                                    url: "@Url.Action("ListMake", "Fitment")",
+                                    type: "POST",
+                                    dataType: "json",
+                                    data: mYear,
+                                    success: function (makes) {
+                                        //alert('1');
+                                        $("#MakeID").html(""); // clear before appending new list
+                                        //alert('2');
+                                        dataobjects = $.map(makes, function (el) { return el });
+                                        //alert(dataobjects.length);
+                                        $("#MakeID").select2({
+                                            data: dataobjects,
+                                            placeholder: "Select Make...."
+
+                                        });
+
+                                    }
+                                });
+                            }
+
+                            function listModel() {
+                                var mYear = {
+                                    year: $("#Year").val(),
+                                    EndYear: "0",
+                                    MakeID: $("#MakeID").val()
+
+                                };
+                                //addAntiForgeryToken(mYear);
+
+                                //alert(mYear.year);
+                                //if (!$('#yearrange').is(":checked")) {
+
+                               // mYear.EndYear = 0;
+                                //}
+
+                                $('#ModelID').attr("disabled", false);
+
+                                $.ajax({
+                                    url: "@Url.Action("ListModel", "Fitment")",
+                                    type: "POST",
+                                    dataType: "json",
+                                    data: mYear,
+                                    success: function (models) {
+                                        //alert('1');
+                                        $("#ModelID").html(""); // clear before appending new list
+                                        //alert('2');
+                                        dataobjects = $.map(models, function (el) { return el });
+                                        //alert(dataobjects.length);
+                                        $("#ModelID").select2({
+                                            data: dataobjects,
+                                            placeholder: "Select Model...."
+                                        });
+
+                                    }
+                                });
+                            }
+
+                            function listTrim() {
+                                var mYear = {
+                                    year: $("#Year").val(),
+                                    EndYear: "0",
+                                    MakeID: $("#MakeID").val(),
+                                    ModelID: $('#ModelID').val()
+
+                                };
+                                //addAntiForgeryToken(mYear);
+
+                               // alert(mYear.year);
+                                //if(!$('#yearrange').is(":checked")){
+                               // myear.EndYear = 0;
+
+
+                               // $('#VehicleID').attr("disabled", false);
+                                // alert(mYear.ModelID);
+                                $.ajax({
+                                    url: "@Url.Action("ListTrim", "Fitment")",
+                                    type: "POST",
+                                    dataType: "json",
+                                    data: mYear,
+                                    success: function (models) {
+                                        //alert('1');
+                                        $("#VehicleID").html(""); // clear before appending new list
+                                        //alert('2');
+                                        dataobjects = $.map(models, function (el) { return el });
+                                        //alert(dataobjects.length);
+                                        $("#VehicleID").select2({
+                                            data: dataobjects,
+                                            placeholder: "Select Trinm...."
+                                        });
+
+                                    }
+                                });
+                            }
+                            $("#ModelID").change(function () {
+                                listTrim();
+
+
+                            });
+
+                            function listEngine() {
+                                var mYear = {
+
+                                    VehicelID: $('#VehicelID').val()
+
+                                };
+                                //addAntiForgeryToken(mYear);
+
+                                //alert(mYear.year);
+                                //if(!$('#yearrange').is(":checked")){
+
+
+
+                                $('#EngineID').attr("disabled", false);
+                                //alert(mYear.VehicleID);
+                                $.ajax({
+                                    url: "@Url.Action("ListEngine", "Fitment")",
+                                    type: "POST",
+                                    dataType: "json",
+                                    data: mYear,
+                                    success: function (models) {
+                                        //alert('1');
+                                        $("#EngineID").html(""); // clear before appending new list
+                                        //alert('2');
+                                        dataobjects = $.map(models, function (el) { return el });
+                                        //alert(dataobjects.length);
+                                        $("#EngineID").select2({
+                                            data: dataobjects,
+                                            placeholder: "Select Engine...."
+                                        });
+
+                                    }
+                                });
+                            }
+
+                            $("#VehicleID").change(function () {
+
+                                listEngine();
+
+                            });
+
+                        });
+</script>

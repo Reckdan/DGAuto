@@ -15,10 +15,10 @@ namespace Nop.Plugin.Extension.Vehicle.Domain
         }  
        // public int VehicleModelID { get; set; }
         public string ModelName { get; set; }
-        public int MakeID { get; set; }
+        //public int MakeID { get; set; }
         public int VehicleTypeID { get; set; }
         public int VehicleTypeGroupID { get; set; }
-        public virtual Make Make { get; set; }
+        //public virtual Make Make { get; set; }
         public virtual VehicleType VehicleType { get; set; }
         public virtual ICollection<BaseVehicle> BaseVehicles { get; set; }
 

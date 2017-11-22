@@ -53,6 +53,8 @@ using Nop.Services.Shipping;
 using Nop.Services.Shipping.Pickup;
 using Nop.Services.Tax;
 using Nop.Web.Framework.Security.Captcha;
+using Nop.Admin.Models.Fitment;
+using Nop.Core.Domain.Fitment;
 
 namespace Nop.Admin.Extensions
 {
@@ -715,6 +717,21 @@ namespace Nop.Admin.Extensions
             return model.MapTo(destination);
         }
 
+        #endregion
+
+        #region
+        public static   VFitmentModel ToModel(this VFitment entity)
+        {
+            return entity.MapTo<VFitment, VFitmentModel>();
+        }
+        public static VFitment ToEntity(this VFitmentModel model)
+        {
+            return model.MapTo<VFitmentModel, VFitment>();
+        }
+        public static VFitment ToEntity(this VFitmentModel model, VFitment destination)
+        {
+            return model.MapTo(destination);
+        }
         #endregion
 
         #region Discounts

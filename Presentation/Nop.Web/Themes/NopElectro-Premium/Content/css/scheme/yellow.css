@@ -1,0 +1,321 @@
+﻿/*General, Home, Footer and Header*/
+.owl-prev:hover, .owl-next:hover {
+    background-color: #444;
+}
+
+.responsive-header {
+    background: #444;
+}
+
+.button-2, .button-1 {
+    font-family: Poppins, sans-serif;
+    font-weight: 500;
+}
+
+.theme-custom .nivo-controlNav a.active {
+    background-color: #444 !important;
+}
+
+.search-box .search-box-button:hover, .newsletter-subscribe-button, .eu-cookie-bar-notification button {
+    background-color: #fed700;
+    color: #444;
+    font-family: Poppins, sans-serif;
+    font-weight: 500;
+}
+
+    .search-box .search-box-button, .newsletter-subscribe-button:hover, .eu-cookie-bar-notification button:hover {
+        background: #444;
+        color: #fff;
+        font-family: Poppins, sans-serif;
+        font-weight: 500;
+    }
+
+.header-links a:hover, .footer-block .list a:hover, .footer-powered-by a,
+.eu-cookie-bar-notification a, .mini-shopping-cart .name a {
+    color: #218dcc;
+}
+
+    .mini-shopping-cart .name a:hover {
+        color: #fed700;
+    }
+
+.owl-title, .news-list-homepage .title, .home-page-polls .title, .news-list-homepage .title strong, .home-page-polls .title strong {
+    background: #eee;
+    color: #444;
+}
+
+.header-menu {
+    background: #fed700;
+}
+
+    .header-menu > ul > li > a {
+        color: #444;
+    }
+
+@media (min-width: 1001px) {
+    .header-menu > ul > li {
+        border-color: #fff;
+    }
+
+    .header-menu .sublist li:hover > a {
+        background-color: #ddd;
+        color: #000;
+        text-decoration: none;
+    }
+
+    .mini-shopping-cart input[type="button"] {
+        background: #fed700;
+        color: #444;
+        font-family: Poppins, sans-serif;
+        font-weight: 600;
+    }
+
+        .mini-shopping-cart input[type="button"]:hover {
+            background: #444;
+            color: #fff;
+        }
+
+    .header-menu > ul > li > a:hover {
+        color: #000;
+    }
+}
+
+@media (max-width: 1000px) {
+    .header-menu {
+        background: #fff;
+    }
+
+    .menu-toggle {
+        color: #444;
+        background-color: #fed700;
+        font-weight: 600;
+    }
+
+    .top-menu .sublist li a {
+        color: #444;
+    }
+}
+
+
+@media (max-width: 767px) {
+
+    .footer-block .title {
+        margin: 0 0 1px;
+        background-color: #444;
+        color: #fff;
+    }
+}
+
+/*Catalog*/
+.block .title {
+    background-color: #444;
+    color: #fed700;
+}
+
+    .block .title strong {
+        color: #fed700;
+    }
+
+.item-box .product-title a:hover, .breadcrumb strong, .breadcrumb a, .block .list a:hover, .block .list .active > a,
+.block .view-all a, .filtered-items .item, .product-filter .group li a:hover,
+.block .tags li a:hover, .product-tags-all-page li a:hover, .overview .value a, .variant-overview .value a {
+    color: #218dcc;
+}
+
+.block.block-category-navigation .list .active > a {
+    background: #fed700;
+    border-radius: 25px;
+    color: #444;
+}
+
+.item-box .product-box-add-to-cart-button, .search-input .button-1,
+.overview .add-to-cart-button, .variant-overview .add-to-cart-button,
+.ui-dialog-content .back-in-stock-subscription-page .button-1 {
+    background-color: #fed700;
+    color: #444;
+    font-family: Poppins, sans-serif;
+    font-weight: 500;
+}
+
+    .search-input .button-1:hover, .overview .add-to-cart-button:hover, .variant-overview .add-to-cart-button:hover,
+    .ui-dialog-content .back-in-stock-subscription-page .button-1:hover {
+        background: #444;
+        color: #fff;
+    }
+
+    .item-box .product-box-add-to-cart-button:hover {
+        background-color: #444;
+    }
+
+.product-review-links a:hover {
+    color: #218dcc;
+}
+
+.overview .product-price,
+.variant-overview .product-price {
+    color: #218dcc;
+}
+
+.quickview-message.success {
+    color: #fed700;
+    background: #444;
+    padding: 5px 12px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    border-radius: 25px;
+    text-align: center;
+}
+
+.quickview-message.error {
+    color: #fff;
+    background: #218dcc;
+    padding: 5px 12px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    border-radius: 25px;
+    text-align: center;
+}
+
+/*Blog & News*/
+.blog-posts .buttons .read-more,
+.news-items .buttons .read-more {
+    background-color: #aaa;
+}
+
+    .blog-posts .buttons .read-more:hover,
+    .news-items .buttons .read-more:hover,
+    .poll .buttons input:hover {
+        background-color: #fed700;
+        color: #444;
+        text-decoration: none;
+    }
+
+.news-list-homepage .view-all a:hover, .newsletter-result {
+    color: #fed700;
+}
+
+#bar-notification.success, #dialog-notifications-success {
+    color: #444;
+}
+
+#dialog-notifications-error, #bar-notification.error, #dialog-notifications-warning {
+    color: #218dcc;
+}
+
+/*Cart, Wishlist, Checkout*/
+.cart .product .edit-item a, .cart-total .order-total, .terms-of-service a, .order-completed .details a,
+.cart a, .data-table a, .forum-table a {
+    color: #218dcc;
+}
+
+.cart .product a:hover, .data-table .product a:hover, .data-table .info a:hover, .wishlist-page .share-info a:hover,
+.opc .back-link a:hover {
+    color: #fed700;
+}
+
+.cart th, .data-table th, .forum-table th {
+    background-color: #444;
+}
+
+.wishlist-content .update-wishlist-button, .wishlist-content .wishlist-add-to-cart-button,
+.shopping-cart-page .common-buttons input:first-child, .checkout-page .button-1, .checkout-page a.button-2.btn-sm:hover {
+    background-color: #fed700;
+    color: #444;
+    font-family: Poppins, sans-serif;
+    font-weight: 500;
+}
+
+    .wishlist-content .update-wishlist-button:hover,
+    .wishlist-content .wishlist-add-to-cart-button:hover,
+    .shopping-cart-page .common-buttons input:first-child:hover,
+    .checkout-page .button-1:hover {
+        background-color: #444;
+        color: #fff;
+    }
+
+.cart-footer .checkout-button {
+    background: #218dcc;
+}
+
+
+/*********** ACCOUNT, CONTACT & EMAIL A FRIEND & APPLY FOR VENDOR ACCOUNT ***********/
+.login-page .title, .fieldset .title, .section .title,
+.product-review-item .review-info a,
+.product-review-helpfulness .vote, .email-a-friend-page .title h2 {
+    color: #218dcc;
+}
+
+.registration-page .button-1, .registration-result-page .button-1, .login-page .button-1,
+.password-recovery-page .button-1, .account-page .button-1,
+.return-request-page .button-1, .opc .allow.active .step-title,
+.order-details-page .page-title a.print-order-button,
+.contact-page .button-1, .email-a-friend-page .button-1, .apply-vendor-page .button-1 {
+    background-color: #fed700;
+    color: #444;
+    font-family: Poppins, sans-serif;
+    font-weight: 500;
+}
+
+    .registration-page .button-1:hover, .registration-result-page .button-1:hover,
+    .login-page .button-1:hover, .password-recovery-page .button-1:hover,
+    .account-page .button-1:hover, .return-request-page .button-1:hover,
+    .order-details-page .page-title a.print-order-button:hover,
+    .order-details-page .actions input:first-child:hover, .contact-page .button-1:hover,
+    .email-a-friend-page .button-1:hover, .apply-vendor-page .button-1:hover {
+        background-color: #444;
+        color: #fff;
+    }
+
+.block-account-navigation a.active, .address-list-page .button-2:hover, .order-list-page .button-2:hover,
+.order-details-page .order-overview .order-total strong {
+    color: #218dcc;
+}
+
+.order-details-page .actions input:first-child {
+    background-color: #218dcc;
+}
+
+/*Buttons and Links*/
+.order-details-page .download a, .private-message-send-page a, .accept-privacy-policy span, .registration-result-page .result,
+.external-auth-association a, .add-more-external-records a, .return-request-list-page a, .order-details-page .tax-shipping-info a,
+.sitemap-page a:hover, .post-title:hover, .news-title:hover, .blog-page .tags a, .blogpost-page .tags a,
+.blog-posts .buttons .read-comments:hover, .comment-info a.username:hover, .forum-search-box .advanced a:hover,
+.forums-table-section-title a:hover, .forums-table-section .forum-title a:hover, .forums-table-section .topic-title a:hover,
+.topic-post a.username:hover, .topic-post .post-actions .edit-post-button:hover, .topic-post .post-actions .delete-post-button:hover,
+.topic-post .post-actions .post-link-button, .ui-tabs-nav li.ui-state-active a, .private-messages-page td.subject a.pm-unread,
+.latest-posts .topic-title a:hover, .shipment-details-page .tracking-number .tracking-url,
+.footer-tax-shipping a, .item-box .tax-shipping-info a, .manufacturer-grid .title a:hover, .vendor-grid .title a:hover,
+.overview .tax-shipping-info a, .variant-overview .tax-shipping-info a, .product-reviews-page h1 a,
+.compare-products-table .remove-button:hover, .compare-products-table .product-name td a:hover {
+    color: #218dcc;
+}
+
+.order-details-page .repost .button-2, .user-agreement-page .button-1, .new-comment .button-1,
+.forums-table-section .view-all a, .forum-edit-page .buttons .button-1, .move-topic-page .buttons .button-1,
+.private-messages .buttons .button-1, .contact-vendor .button-2, .write-review .button-1,
+.compare-products-page .clear-list, .enter-password-form input[type="submit"], .ui-datepicker-header,
+.color-squares .selected-value .color-container, .attribute-squares .selected-value .attribute-square-container {
+    background-color: #fed700;
+    color: #444;
+    font-family: Poppins, sans-serif;
+    font-weight: 500;
+}
+
+    .order-details-page .repost .button-2:hover, .user-agreement-page .button-1:hover, .new-comment .button-1:hover,
+    .forums-table-section .view-all a:hover, .forum-edit-page .buttons .button-1:hover, .move-topic-page .buttons .button-1:hover,
+    .private-messages .buttons .button-1:hover, .contact-vendor .button-2:hover, .write-review .button-1:hover,
+    .compare-products-page .clear-list:hover, .enter-password-form input[type="submit"]:hover {
+        background-color: #444;
+        color: #fff;
+    }
+
+.cart td.subtotal .discount {
+    color: #218dcc;
+}
+
+.ui-datepicker-calendar .ui-state-active {
+    outline: 2px solid #444;
+    color: #444;
+    /*override jQuery UI styles, do not delete doubled properties*/
+    color: #444 !important;
+}

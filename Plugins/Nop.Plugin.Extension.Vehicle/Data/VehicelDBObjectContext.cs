@@ -2,6 +2,8 @@
 using Nop.Data;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Common;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
@@ -119,7 +121,7 @@ namespace Nop.Plugin.Extension.Vehicle.Data
 
         IDbSet<TEntity> IDbContext.Set<TEntity>()
         {
-            throw new NotImplementedException();
+            return base.Set<TEntity>();
         }
 
         int IDbContext.SaveChanges()
@@ -128,11 +130,71 @@ namespace Nop.Plugin.Extension.Vehicle.Data
             throw new NotImplementedException();
         }
 
-         IList<TEntity> IDbContext.ExecuteStoredProcedureList<TEntity>(string commandText, params object[] parameters)
+         IList<TEntity> IDbContext.ExecuteStoredProcedureList<TEntity>(string commandText, params object[] parameters) /*where TEntity : BaseEntity, new()*/
         {
-          
-            throw new NotImplementedException();
+
+
+            //add parameters to command
+            if (parameters != null && parameters.Length > 0)
+            {
+                for (int i = 0; i <= parameters.Length - 1; i++)
+                {
+                    var p = parameters[i] as DbParameter;
+                    if (p == null)
+                        throw new Exception("Not support parameter type");
+
+                    commandText += i == 0 ? " " : ", ";
+
+                    commandText += "@" + p.ParameterName;
+                    if (p.Direction == ParameterDirection.InputOutput || p.Direction == ParameterDirection.Output)
+                    {
+                        //output parameter
+                        commandText += " output";
+                    }
+                }
+            }
+
+            var result = this.Database.SqlQuery<TEntity>(commandText, parameters).ToList();
+
+            //performance hack applied as described here - http://www.nopcommerce.com/boards/t/25483/fix-very-important-speed-improvement.aspx
+            bool acd = this.Configuration.AutoDetectChangesEnabled;
+            try
+            {
+                this.Configuration.AutoDetectChangesEnabled = false;
+
+                for (int i = 0; i < result.Count; i++)
+                    result[i] = AttachEntityToContext(result[i]);
+            }
+            finally
+            {
+                this.Configuration.AutoDetectChangesEnabled = acd;
+            }
+
+            return result;
         }
+
+        /// <summary>
+        /// Attach an entity to the context or return an already attached entity (if it was already attached)
+        /// </summary>
+        /// <typeparam name="TEntity">TEntity</typeparam>
+        /// <param name="entity">Entity</param>
+        /// <returns>Attached entity</returns>
+        protected virtual TEntity AttachEntityToContext<TEntity>(TEntity entity) where TEntity : BaseEntity, new()
+        {
+            //little hack here until Entity Framework really supports stored procedures
+            //otherwise, navigation properties of loaded entities are not loaded until an entity is attached to the context
+            var alreadyAttached = Set<TEntity>().Local.FirstOrDefault(x => x.Id == entity.Id);
+            if (alreadyAttached == null)
+            {
+                //attach new entity
+                Set<TEntity>().Attach(entity);
+                return entity;
+            }
+
+            //entity is already loaded
+            return alreadyAttached;
+        }
+
 
         IEnumerable<TElement> IDbContext.SqlQuery<TElement>(string sql, params object[] parameters)
         {

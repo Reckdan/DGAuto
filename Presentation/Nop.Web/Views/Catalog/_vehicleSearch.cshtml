@@ -1,0 +1,379 @@
+﻿@model Nop.Admin.Models.Fitment.VFitmentModel
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <i class="fa fa-external-link-square"></i>Select Your Vehicle
+    </div>
+    <div class="panel-body">
+
+
+        <div id="danger" class="hidden">
+            <button data-dismiss="alert" class="close">
+                &times;
+            </button>
+            <i class="fa fa-check"></i>
+            <strong>Oh snap!</strong> Change a few things up and try submitting again.
+        </div>
+        <div id="success" class="@ViewBag.MessageStatus" role="alert">
+            <button data-dismiss="alert" class="close">
+                &times;
+            </button>
+            <i class="fa fa-check"></i>
+            <strong>  <small>@ViewBag.CurrentVehicle</small></strong>
+        </div>
+        @using (Html.BeginForm("FindParts", "Catalog", FormMethod.Post, new { id = "fitment-form" }))
+        {
+            @Html.AntiForgeryToken()
+
+            @*@Html.Partial("_CreateOrUpdate", Model)*@
+           <input type="hidden" id="hform" value="@ViewBag.hform" />
+
+<div id="example">
+                @*alert alert-danger*@
+                <div class="form-horizontal" id="vehicleSearch">
+                    
+                        
+                    
+                    <div class="form-group">
+
+
+                        <div class="col-sm-11">
+                            @*@Html.NopEditorFor(model => model.Sku)*@
+
+                            @*@Html.Editor(Model.Sku)*@
+                            @*<input id="startyear" placeholder="From" style="width: 100%;" />*@
+                            @Html.DropDownList("Year", Model.YearList, new { @class =ViewBag.FormStatus+ " input-sm" })
+                            @*  @Html.DropDownList("Year",Model.YearList,"Select Year", new { @class = "form-control" })*@
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+
+                        <div class="col-sm-11">
+                            <select class="@ViewBag.FormStatus input-sm" id="MakeID" name="MakeID" disabled="disabled">
+                                <option value="0" selected="selected">Select Make</option>
+                            </select>
+                            @*<input id="MakeID" name="MakeID" disabled="disabled" style="width: 100%;" />*@
+                        </div>
+                        </div>
+                            <div class="form-group">
+
+                        <div class="col-sm-11">
+                            <select class="@ViewBag.FormStatus input-sm" id="ModelID" name="ModelID" disabled="disabled">
+                                <option value="0" selected="selected" disabled="disabled">Select Model</option>
+                            </select>
+                            @*<input id="ModelID" name="ModelID" disabled="disabled" style="width: 100%;" />*@
+                        </div>
+                    </div>
+                    <div class="form-group" id="trim-dv">
+
+                        <div class="col-sm-11">
+                            <select class="form-control input-sm" id="VehicleID" name="VehicleID" disabled="disabled">
+                                <option value="0" selected="selected">Trim</option>
+                            </select>
+                            @*<input id="VehicleID" name="VehicleID" disabled="disabled" style="width: 100%;" />*@
+                        </div>
+                    </div>
+                    <div class="form-group" id="engine-dv">
+
+                        <div class="col-sm-11">
+                            <select class="form-control input-sm" id="EngineID" name="EngineID" disabled="disabled">
+                                <option value="0" selected="selected">Engine</option>
+                            </select>
+                            @*<input id="EngineID" name="EngineID" disabled="disabled" style="width: 100%;" />*@
+                        </div>
+                    </div>
+
+                </div>
+                @*<div class="content-header clearfix">
+                </div>*@
+                    <div class="pull-right">
+                      
+                        <button type="submit" name="clear" class="btn btn-primary" id="ClearSelected">
+                            <i class="fa fa-floppy-o"></i>
+                            Find Parts Now
+                        </button>
+                        
+                        <button type="submit" name="save" class="btn btn-default" id="FindParts">
+                            <i class="fa fa-floppy-o"></i>
+                            Find Parts Now
+                        </button>
+                       
+
+
+                    </div>
+               
+            </div>
+
+
+
+
+        }
+    </div>
+
+</div>
+<script>
+    var dataobjects = [];
+    function disableFind() {
+        var year = $('#Year').val();
+        var make = $('#MakeID').val();
+        var model = $('#ModelID').val();
+        //alert(year+' ' +make+' '+model)
+        if (year > 0 && make > 0 && model > 0) {
+            $("#FindParts").prop('disabled', false);
+            $("#FindParts").attr('class', 'btn btn-primary');
+        } else
+             $("#FindParts").prop('disabled', true);
+
+    }
+    $(document).ready(function () {
+     
+        if ($('#hform').val() == "1") {
+          
+            $("#ClearSelected").show();
+            $("#FindParts").hide();
+        } else {
+            $("#ClearSelected").hide();
+            $("#FindParts").show();
+        }
+
+     
+        $('#success').on('closed.bs.alert', function () {
+            $.ajax({
+             url: "@Url.Action("ClearCureentVehicle", "Catalog")",
+                type: "GET",
+            dataType: "json",
+            //data: mYear,
+            success: function (makes) {
+                // alert('1');
+                $("hform").val("0");
+                $("#MakeID").attr('class', 'form-control input-sm');
+                $("#ModelID").attr('class', 'form-control input-sm');
+                $("#Year").attr('class', 'form-control input-sm');
+                $("#ClearSelected").hide();
+                $("#FindParts").show();
+                 },
+
+            error: function (xhr, ajaxOptions, thrownError) {
+                     alert(xhr.responseText);
+                 }
+             });
+         })
+        $("#ClearSelected").click(function (e) {
+             e.preventDefault();
+
+            //var postData = {
+            //    Year: $("#Year").val(),
+            //    MakeID:$("#MakeID").val(),
+            //    ModelID:$("#ModelID").val(),
+            //    VehicleID:$("#VehicleID").val(),
+            //    EngineID:$("#Egine").val()
+            //};
+
+            $.ajax({
+             url: "@Url.Action("ClearCureentVehicle", "Catalog")",
+                type: "GET",
+            dataType: "json",
+            //data: mYear,
+            success: function (makes) {
+                // alert('1');
+                $("hform").val("1");
+                $("#MakeID").attr('class', 'form-control input-sm');
+                $("#ModelID").attr('class', 'form-control input-sm');
+                $("#Year").attr('class', 'form-control input-sm');
+                $('#success').alert('close');
+                $("#ClearSelected").hide();
+                $("#FindParts").show();
+                 },
+
+            error: function (xhr, ajaxOptions, thrownError) {
+                     alert(xhr.responseText);
+                 }
+             });
+
+            @*addAntiForgeryToken(postData);
+            //alert('ajax call');
+            alert(postData.MakeID.toString());
+
+            $.post("@Url.Action("FindParts", "Catalog")", { formData: postData },
+                function () { });*@
+
+    });
+
+
+
+        $("#trim-dv").hide();
+        $("#engine-dv").hide();
+        $("#FindParts").prop('disabled', true);
+        function listMake(){
+            var mYear={
+                year: $("#Year").val(),
+                EndYear: "0"
+            };
+            //addAntiForgeryToken(mYear);
+
+            //alert(mYear.year);
+
+
+            $('#MakeID').attr("disabled",false);
+            $.ajax({
+                url: "@Url.Action("ListMake", "Catalog")",
+                type: "GET",
+            dataType: "json",
+            data: mYear,
+            success: function (makes) {
+                // alert('1');
+               // alert(makes[0].text);
+                $("#MakeID").html(""); // clear before appending new list
+                //alert('2');
+                dataobjects=$.map(makes,function(el) {return el});
+                //alert(dataobjects.length);
+                //alert(dataobjects.length);
+                //$.each(dataobjects, function (key, value) {
+                //    $('#MakeID select').append('<option value=' + value.id + '>' + value.text + '</option>');
+                //}
+                //);
+
+                $("#MakeID").select2({data:dataobjects,
+                    placeholder:"Select Make"
+
+                });
+
+            },
+
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert(xhr.responseText);
+            }
+        });
+    }
+        $("#Year").change(function(){
+            listMake();
+            $("#VehicleID").html("");
+            $("#ModelID").html("");
+            $("#EngineID").html("");
+            disableFind();
+        });
+
+
+
+    $("#MakeID").change(function(){
+        listModel();
+        $("#VehicleID").html("");
+        $("#EngineID").html("");
+        disableFind();
+    });
+
+    function listModel(){
+        var mYear={
+            year: $("#Year").val(),
+            EndYear: "0",
+            MakeID: $("#MakeID").val()
+
+        };
+        //addAntiForgeryToken(mYear);
+
+        //alert(mYear.year);
+
+
+        $('#ModelID').attr("disabled",false);
+
+        $.ajax({
+            url: "@Url.Action("ListModel", "Catalog")",
+            type: "GET",
+        dataType: "json",
+        data: mYear,
+        success: function (models) {
+            //alert('1');
+            $("#ModelID").html(""); // clear before appending new list
+            //alert('2');
+            dataobjects=$.map(models,function(el) {return el});
+            //alert(dataobjects.length);
+            $("#ModelID").select2({data:dataobjects,
+                placeholder:"Select Model"});
+
+        }
+    });
+    }
+
+    function listTrim(){
+        var mYear={
+            year: $("#Year").val(),
+            EndYear:"0",
+            MakeID: $("#MakeID").val(),
+            ModelID: $('#ModelID').val()
+
+        };
+        //addAntiForgeryToken(mYear);
+
+        //alert(mYear.year);
+        //if(!$('#yearrange').is(":checked")){
+
+        $("#trim-dv").show();
+        $('#VehicleID').attr("disabled",false);
+        // alert(mYear.ModelID);
+        $.ajax({
+            url: "@Url.Action("ListTrim", "Catalog")",
+            type: "GET",
+        dataType: "json",
+        data: mYear,
+        success: function (models) {
+            //alert('1');
+            $("#VehicleID").html(""); // clear before appending new list
+            //alert('2');
+            dataobjects=$.map(models,function(el) {return el});
+            //alert(dataobjects.length);
+            $("#VehicleID").select2({data:dataobjects,
+                placeholder:"Select Trinm"});
+
+        }
+    });
+    }
+    $("#ModelID").change(function(){
+        listTrim();
+        $("#EngineID").html("");
+        disableFind();
+
+    });
+
+    function listEngine(){
+        var mYear={
+
+            VehicelID: $('#VehicleID').val()
+
+        };
+        //addAntiForgeryToken(mYear);
+
+        //alert(mYear.year);
+        //if(!$('#yearrange').is(":checked")){
+
+        $("#engine-dv").show();
+
+        $('#EngineID').attr("disabled",false);
+        //alert(mYear.VehicleID);
+        $.ajax({
+            url: "@Url.Action("ListEngine", "Catalog")",
+            type: "GET",
+        dataType: "json",
+        data: mYear,
+        success: function (models) {
+            //alert('1');
+            $("#EngineID").html(""); // clear before appending new list
+            //alert('2');
+            dataobjects=$.map(models,function(el) {return el});
+            //alert(dataobjects.length);
+            $("#EngineID").select2({data:dataobjects,
+                placeholder:"Select Engine...."});
+
+        }
+    });
+    }
+
+    $("#VehicleID").change(function(){
+
+        listEngine();
+        disableFind();
+
+    });
+
+    });
+</script>

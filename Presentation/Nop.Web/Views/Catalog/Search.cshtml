@@ -74,6 +74,11 @@
                                 </div>
                             }
                             <div class="inputs">
+                                @Html.LabelFor(model => model.Condition, new { }, ":")
+                                @Html.DropDownListFor(model => model.ConditionId, Model.Conditions)
+
+                            </div>
+                            <div class="inputs">
                                 <label>@T("Search.PriceRange"):</label>
                                 <span class="price-range">
                                     @T("Search.PriceRange.From")
@@ -82,6 +87,7 @@
                                     @Html.TextBoxFor(model => model.pt, new { @class = "price-to" })
                                 </span>
                             </div>
+                            
                             <div class="inputs reversed">
                                 @Html.CheckBoxFor(model => model.sid)
                                 @Html.LabelFor(model => model.sid)

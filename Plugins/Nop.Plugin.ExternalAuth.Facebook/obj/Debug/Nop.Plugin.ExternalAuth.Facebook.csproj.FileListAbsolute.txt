@@ -12,3 +12,17 @@ C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\AutoPartsNew\Plugi
 C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\AutoPartsNew\Plugins\Nop.Plugin.ExternalAuth.Facebook\obj\Debug\Nop.Plugin.ExternalAuth.Facebook.csprojResolveAssemblyReference.cache
 C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\AutoPartsNew\Plugins\Nop.Plugin.ExternalAuth.Facebook\obj\Debug\Nop.Plugin.ExternalAuth.Facebook.dll
 C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\AutoPartsNew\Plugins\Nop.Plugin.ExternalAuth.Facebook\obj\Debug\Nop.Plugin.ExternalAuth.Facebook.pdb
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\DGAuto\Presentation\Nop.Web\Plugins\ExternalAuth.Facebook\Description.txt
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\DGAuto\Presentation\Nop.Web\Plugins\ExternalAuth.Facebook\Views\Configure.cshtml
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\DGAuto\Presentation\Nop.Web\Plugins\ExternalAuth.Facebook\Views\PublicInfo.cshtml
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\DGAuto\Presentation\Nop.Web\Plugins\ExternalAuth.Facebook\web.config
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\DGAuto\Presentation\Nop.Web\Plugins\ExternalAuth.Facebook\Content\facebookstyles.css
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\DGAuto\Presentation\Nop.Web\Plugins\ExternalAuth.Facebook\Content\Images\facebook-signing.png
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\DGAuto\Presentation\Nop.Web\Plugins\ExternalAuth.Facebook\logo.jpg
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\DGAuto\Presentation\Nop.Web\Plugins\ExternalAuth.Facebook\Nop.Plugin.ExternalAuth.Facebook.dll.config
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\DGAuto\Presentation\Nop.Web\Plugins\ExternalAuth.Facebook\Nop.Plugin.ExternalAuth.Facebook.dll
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\DGAuto\Presentation\Nop.Web\Plugins\ExternalAuth.Facebook\Nop.Plugin.ExternalAuth.Facebook.pdb
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\DGAuto\Plugins\Nop.Plugin.ExternalAuth.Facebook\obj\Debug\Nop.Plugin.ExternalAuth.Facebook.csproj.App.config
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\DGAuto\Plugins\Nop.Plugin.ExternalAuth.Facebook\obj\Debug\Nop.Plugin.ExternalAuth.Facebook.csprojResolveAssemblyReference.cache
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\DGAuto\Plugins\Nop.Plugin.ExternalAuth.Facebook\obj\Debug\Nop.Plugin.ExternalAuth.Facebook.dll
+C:\Users\danie\OneDrive\Documents\Visual Studio 2015\Projects\DGAuto\Plugins\Nop.Plugin.ExternalAuth.Facebook\obj\Debug\Nop.Plugin.ExternalAuth.Facebook.pdb

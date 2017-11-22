@@ -1,0 +1,132 @@
+﻿@model ProductDetailsModel.AddToCartModel
+@using Nop.Web.Models.Catalog;
+@using Nop.Core.Domain.Orders;
+
+@{
+    var storeContext = Nop.Core.Infrastructure.EngineContext.Current.Resolve<Nop.Core.IStoreContext>();
+    
+    var settingService = Nop.Core.Infrastructure.EngineContext.Current.Resolve<Nop.Services.Configuration.ISettingService>();
+    var quickViewEnabled = settingService.GetSettingByKey<bool>("NopElectro.QuickView", false, storeContext.CurrentStore.Id, true);
+    var isQuickView = (quickViewEnabled && Request.QueryString["quickview"] == "1").ToString().ToLowerInvariant();
+}
+
+@if (Model.UpdatedShoppingCartItemId > 0)
+{
+    @Html.HiddenFor(x => x.UpdatedShoppingCartItemId)
+}
+@{
+    if (Request.RequestContext.HttpContext.Session["BaseVehicleID"] != null)
+    {
+        if (Request.RequestContext.HttpContext.Session["BaseVehicleID"].ToString() != "0")
+        {
+            var hd = Request.RequestContext.HttpContext.Session["BaseVehicleID"];
+            <input type="hidden" id="hf" value="@hd" />
+       // @Html.Hidden("hf", hd)
+        }
+        else
+        {
+            <input type="hidden" id="hf" value="0" />
+            // @Html.Hidden("hf", "0")
+           // Model.DisableBuyButton = true;
+        }
+    }
+    else
+    {
+        <input type="hidden" id="hf" value="0" />
+     //   @Html.Hidden("hf", "0")
+        //Model.DisableBuyButton = true;
+    }
+}
+
+<input type="hidden" id="prodid" value="@Model.ProductId" />
+@if (!Model.DisableBuyButton || Model.CustomerEntersPrice)
+{
+    <div class="add-to-cart">
+        @if (Model.CustomerEntersPrice)
+        {
+            <div class="customer-entered-price">
+                <div class="price-input">
+                    @Html.LabelFor(model => model.CustomerEnteredPrice, new { @class = "enter-price-label" }, ":")
+                    @*round price*@
+                    @Html.TextBox("CustomerEnteredPrice", Convert.ToInt32(Math.Ceiling(Model.CustomerEnteredPrice)), new { @class = "enter-price-input" })
+                </div>
+                <div class="price-range">
+                    @Model.CustomerEnteredPriceRange
+                </div>
+            </div>
+        }
+        @if (!String.IsNullOrEmpty(Model.MinimumQuantityNotification))
+        {
+            <div class="min-qty-notification">@Model.MinimumQuantityNotification</div>
+        }
+        @if (!Model.DisableBuyButton)
+        {
+            <div class="add-to-cart-panel">
+                @Html.LabelFor(model => model.EnteredQuantity, new { @class = "qty-label" }, ":")
+                @if (Model.AllowedQuantities.Count > 0)
+                {
+                    @Html.DropDownListFor(model => model.EnteredQuantity, Model.AllowedQuantities, new { @class = "qty-dropdown" })
+                }
+                else
+                {
+                    @Html.TextBoxFor(model => model.EnteredQuantity, new { @class = "qty-input" })
+                    //when a customer clicks 'Enter' button we submit the "add to cart" button (if visible)
+                    <script type="text/javascript">
+                        $(document).ready(function () {
+                            $("#@Html.FieldIdFor(model => model.EnteredQuantity)").keydown(function (event) {
+                                if (event.keyCode == 13) {
+                                    $("#add-to-cart-button-@Model.ProductId").click();
+                                    return false;
+                                }
+                            });
+                        });
+                    </script>
+                }
+                @{
+                var addToCartText = "";
+                if (Model.UpdatedShoppingCartItemId > 0 && Model.UpdateShoppingCartItemType.HasValue && Model.UpdateShoppingCartItemType.Value == ShoppingCartType.ShoppingCart)
+                {
+                    addToCartText = T("ShoppingCart.AddToCart.Update").Text;
+                }
+                else
+                {
+                    addToCartText = T("ShoppingCart.AddToCart").Text;
+                    if (Model.IsRental)
+                    {
+                        addToCartText = T("ShoppingCart.Rent").Text;
+                    }
+                    if (Model.AvailableForPreOrder)
+                    {
+                        addToCartText = T("ShoppingCart.PreOrder").Text;
+                    }
+                }
+                <input type="button" id="add-to-cart-button-@Model.ProductId" class="button-1 add-to-cart-button" value="@addToCartText" data-productid="@Model.ProductId" onclick="AjaxCart.addproducttocart_details('@Url.RouteUrl("AddProductToCart-Details", new { productId = Model.ProductId, shoppingCartTypeId = (int)ShoppingCartType.ShoppingCart })', '#product-details-form', @isQuickView);return false;" />
+                }
+            </div>
+        }
+        @Html.Widget("productdetails_add_info", Model.ProductId)
+    </div>
+}
+<script>
+    $(document).ready(function () {
+        var hf = $("#hf").val();
+       // alert(hf);
+        var buttonName = "#add-to-cart-button-" + $("#prodid").val()
+     //   alert(buttonName);
+        if (hf == "0") {
+           // $(".button-1").prop("disabled", true);
+            swal('Oops...',
+                'Please Select your vehicle Make, Model and Year',
+                'error');
+           
+        } else {
+            $(".button-1").prop("disabled", false);
+        }
+
+       
+        
+
+        });
+    
+
+</script>

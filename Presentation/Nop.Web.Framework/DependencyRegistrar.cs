@@ -53,6 +53,7 @@ using Nop.Services.Vendors;
 using Nop.Web.Framework.Mvc.Routes;
 using Nop.Web.Framework.Themes;
 using Nop.Web.Framework.UI;
+using Nop.Services.Fitment;
 
 namespace Nop.Web.Framework
 {
@@ -264,6 +265,9 @@ namespace Nop.Web.Framework
             builder.RegisterType<MessageTokenProvider>().As<IMessageTokenProvider>().InstancePerLifetimeScope();
             builder.RegisterType<Tokenizer>().As<ITokenizer>().InstancePerLifetimeScope();
             builder.RegisterType<EmailSender>().As<IEmailSender>().InstancePerLifetimeScope();
+
+            //=======================My additions===================================================
+            builder.RegisterType<FitmentService>().As<IFitmentService>().InstancePerLifetimeScope();
 
             builder.RegisterType<CheckoutAttributeFormatter>().As<ICheckoutAttributeFormatter>().InstancePerLifetimeScope();
             builder.RegisterType<CheckoutAttributeParser>().As<ICheckoutAttributeParser>().InstancePerLifetimeScope();
